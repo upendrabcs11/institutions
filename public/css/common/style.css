@@ -1,0 +1,66 @@
+@charset "utf-8";
+/* CSS Document */
+
+.signUp{background:url(../../image/background-img/Signup-screen-BG.jpg) no-repeat; background-size: cover; color:#cccccc; position: relative; z-index: 0}
+/*.signUp:after{content:""; background:rgba(0, 0, 0, .8); position:fixed; left:0; right: 0; top:0; bottom: 0} */
+
+.content-container{position:relative; z-index: 1}
+
+/*Header*/
+.header{background:#2874f0; padding:10px 0}
+.header .header-logo img{height:55px}
+.header .nav {float:right; margin-top:15px;}
+.header .nav li{color:#ffffff; float: left}
+.header .nav li a{color:#ffffff; padding:0 15px}
+.header .nav li a:hover{background:none}
+.header .nav li.dropdown-toggle .dropdown-menu{right:0; left: auto}
+.header .nav li ul li{display:block; float:none}
+.header .nav li ul li a{color:#000000}
+
+/*Login Page*/
+.login-page{}
+.login-logo{margin-bottom:20px; text-align:center}
+.login-logo img{height:55px}
+.login-container{background:#2874f0; border-radius:10px; margin:130px auto 0; padding:25px; position:absolute; left:50%;
+top:50%; margin-left:-190px; margin-top:-160px; width:380px}
+.login-container .form-control, .login-container .btn{height:40px}
+.login-container .forgot-pass{display:block; margin:10px 0 0; text-align:center}
+.login-container .footer-logo{display:block; margin:10px auto 0; text-align:center}
+
+.reg-div-dropdown, .city-dropdown{position: relative}
+.reg-div-dropdown ul, .city-dropdown ul{background:#ffffff; display:none; position:absolute; left:0; right:0; list-style:none; margin:0; padding:0; top:32px; z-index:1}
+.reg-div-dropdown ul li, .city-dropdown ul li{border:1px solid #f1f1f1; padding:6px 10px}
+.reg-div-dropdown ul li:hover, .city-dropdown ul li:hover{background:#f6f6f6}
+
+ .hide {display : none;}
+ .ddl-item {cursor: pointer;}
+
+ /*Dashboard*/
+ .dashboard .left{padding:0}
+ .dashboard .right{padding:0}
+ .dashboard .carousel{height:350px; overflow:hidden;}
+
+ .dashboard .dashboard-content{padding:15px}
+
+ .dashboard .left-nav{background:#f1f1f1; height:100vh}
+ .dashboard .left-nav ul{list-style:none; margin:0; padding:0}
+ .dashboard .left-nav ul li a{border-bottom: solid 1px #e1e1e1; color:#666666; display:block; padding:10px 10px; text-decoration:none; transition:all ease-in-out .5s;}
+ .dashboard .left-nav ul li a:hover{background:#e1e1e1; color:#2196F3}
+
+ .dashboard .carousel .add-img-buttom{position:absolute; left:20px; top:20px; z-index:6}
+ .dashboard .carousel .carousel-title{color:#ffffff; font-size:20px; position:absolute; left:20px; top:300px; z-index:6}
+
+ .institute-details{list-style:none; margin:0; padding:0}
+ .institute-details li{border-bottom:1px solid #f1f1f1; padding:15px 0; position:relative;}
+ .institute-details li .edit-icon{cursor:pointer; display:none; position:absolute; right:10px; top:17px}
+ .institute-details li .edit-icon:hover{color:#337ab7}
+ .institute-details li:hover .edit-icon{display:block;}
+
+
+
+
+
+
+
+
+
