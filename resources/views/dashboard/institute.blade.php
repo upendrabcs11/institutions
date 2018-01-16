@@ -51,8 +51,7 @@
 		    </div>
 
 		</div>
-
-
+		
 		<div class="dashboard-content">
 
 		<!-- Tab Pannel -->
@@ -68,33 +67,59 @@
 		      	<li>
 		      		
 		      		<div class="ins-det-item">
-			      		<div class="row">
-			      			<div class="col-xs-2"><label>Display Name</label></div>
-			      			<div class="col-xs-10">{{$institute->Name}}</div>
-			      		</div>
-			      		<div class="row">
-			      			<div class="col-xs-2"><label>Short Name</label></div>
-			      			<div class="col-xs-10">{{$institute->ShortName}}</div>
-			      		</div>
-			      		<div class="row">
-			      			<div class="col-xs-2"><label>Full Name</label></div>
-			      			<div class="col-xs-10">{{$institute->FullName}}</div>
-			      		</div>
-			      		<div class="row">
-			      			<div class="col-xs-2"><label>Institute Type</label></div>
-			      			<div class="col-xs-10">{{$institute->InstituteType}}</div>
-			      		</div>
-			      		<div class="row">
-			      			<div class="col-xs-2"><label>Institute Status</label></div>
-			      			<div class="col-xs-10">{{$institute->Status}}</div>
-			      		</div>
+		      			@if($institute->Name)
+				      		<div class="row">
+				      			<div class="col-xs-2"><label>Display Name</label></div>
+				      			<div class="col-xs-10">{{$institute->Name}}</div>
+				      		</div>
+			      		@endif
+			      		@if($institute->ShortName)
+				      		<div class="row">
+				      			<div class="col-xs-2"><label>Short Name</label></div>
+				      			<div class="col-xs-10">{{$institute->ShortName}}</div>
+				      		</div>
+			      		@endif
+			      		@if($institute->FullName)
+				      		<div class="row">
+				      			<div class="col-xs-2"><label>Full Name</label></div>
+				      			<div class="col-xs-10">{{$institute->FullName}}</div>
+				      		</div>
+			      		@endif
+			      		@if($institute->InstituteType)
+				      		<div class="row">
+				      			<div class="col-xs-2"><label>Institute Type</label></div>
+				      			<div class="col-xs-10">{{$institute->InstituteType}}</div>
+				      		</div>
+			      		@endif
+			      		@if($institute->Status)
+				      		<div class="row">
+				      			<div class="col-xs-2"><label>Institute Status</label></div>
+				      			<div class="col-xs-10">{{$institute->Status}}</div>
+				      		</div>
+			      		@endif
 			      		<span class="edit-icon"><i class="fa fa-pencil"></i> Edit</span>
 		      		</div>
 
 		      		<div class="ins-det-form" style="display:none">
 			      		<div class="row form-group">
-			      			<div class="col-xs-2 text-right">Mobile</div>
-			      			<div class="col-xs-3"><input class="form-control" type="text" value="8285180912" /></div>
+			      			<div class="col-xs-2 text-right">Display Name</div>
+			      			<div class="col-xs-10"><input class="form-control" type="text" value="{{$institute->Name}}" /></div>
+			      		</div>
+			      		<div class="row form-group">
+			      			<div class="col-xs-2 text-right">Short Name</div>
+			      			<div class="col-xs-10"><input class="form-control" type="text" value="{{$institute->ShortName}}" /></div>
+			      		</div>
+			      		<div class="row form-group">
+			      			<div class="col-xs-2 text-right">Full Name</div>
+			      			<div class="col-xs-10"><input class="form-control" type="text" value="{{$institute->FullName}}" /></div>
+			      		</div>
+			      		<div class="row form-group">
+			      			<div class="col-xs-2 text-right">Institute Type</div>
+			      			<div class="col-xs-10"><input class="form-control" type="text" value="{{$institute->InstituteType}}" /></div>
+			      		</div>
+			      		<div class="row form-group">
+			      			<div class="col-xs-2 text-right">Institute Status</div>
+			      			<div class="col-xs-10"><input class="form-control" type="text" value="{{$institute->Status}}" /></div>
 			      		</div>
 		      			<div class="row">
 		      				<div class="col-xs-6 text-center">
@@ -110,15 +135,21 @@
 		      		<div class="ins-det-item">
 			      		<div class="row">
 			      			<div class="col-xs-2"><label>Address</label></div>
-			      			<div class="col-xs-10">Aurangabad <br> Bihar, India 201301</div>
+			      			<div class="col-xs-10">{{$institute->CityName}} , {{$institute->StateName}} 
+			      				<br> 
+			      				{{$institute->AreaName}}, {{$institute->Address}} 
+			      				{{$institute->PinCode}}
+			      			</div>
 			      		</div>
 			      		<span class="edit-icon"><i class="fa fa-pencil"></i> Edit</span>
 		      		</div>
 
 		      		<div class="ins-det-form" style="display:none">
 			      		<div class="row form-group">
-			      			<div class="col-xs-2 text-right">Address</div>
-			      			<div class="col-xs-3"><input class="form-control" type="text" value="Aurangabad" /></div>
+			      			<div class="col-xs-2 text-right">State</div>
+			      			<div class="col-xs-3">
+			      				<input class="form-control" type="text" value="Aurangabad" />
+			      			</div>
 			      		</div>
 			      		<div class="row form-group">
 			      			<div class="col-xs-2 text-right">City</div>

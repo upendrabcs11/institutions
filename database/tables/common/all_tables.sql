@@ -1,6 +1,6 @@
 USE `institutions`;
 -- drop indepetable tables
-  -- institute related
+-- institute related
   
   DROP TABLE IF EXISTS `institute_office`; 
   DROP TABLE IF EXISTS `institute`; 
@@ -41,7 +41,7 @@ USE `institutions`;
 CREATE  TABLE `status` (
   `id` TINYINT NOT NULL  ,
   `name` VARCHAR(45) NOT NULL,
-  `description` VARCHAR(100),
+  `description` VARCHAR(500),
   `created_date` DATETIME ,
   `last_updated_date` DATETIME ,
   `updated_by` INT,
@@ -49,17 +49,17 @@ CREATE  TABLE `status` (
 
 INSERT INTO status(`id`,`name`,`description`)
        VALUES ('0','Inactive','Inactive mean it will be not shown to end user - deactivated'),
-       		  ('1','Active','Active or Live in System or make active by admin '),
-       		  ('10','New','When Anonimus user inserted Records first time'),
-       		  ('11','Pending','When Anonimus user inserted Records first time and email verified Or Verified user creates institute'),
-       		  ('12','Verified','Verified By Web Admin When Anonimus user inserted Records first time and email verified Or Verified user creates institute');
+            ('1','Active','Active or Live in System or make active by admin '),
+            ('10','New','When Anonimus user inserted Records first time'),
+            ('11','Pending','When Anonimus user inserted Records first time and email verified Or Verified user creates institute'),
+            ('12','Verified','Verified By Web Admin When Anonimus user inserted Records first time and email verified Or Verified user creates institute');
 
 -- insitute type
 
 CREATE  TABLE `institute_type` (
   `id` TINYINT NOT NULL  ,
   `name` VARCHAR(45) NOT NULL ,
-  `description` VARCHAR(100),
+  `description` VARCHAR(500),
   `status` TINYINT NOT NULL DEFAULT 0,
   `created_date` DATETIME ,
   `last_updated_date` DATETIME ,
@@ -82,7 +82,7 @@ CREATE  TABLE `user_type` (
   `id` TINYINT NOT NULL  ,
   `name` VARCHAR(45) NOT NULL ,
   `status` TINYINT,
-  `description` VARCHAR(100),
+  `description` VARCHAR(500),
    CONSTRAINT PK_status PRIMARY KEY (id),
    CONSTRAINT FK_user_type_status FOREIGN KEY (`status`) REFERENCES status(`id`)
   );
@@ -97,7 +97,7 @@ INSERT INTO user_type(`id`,`name`,`description`)
 CREATE  TABLE `course_type` (
   `id` TINYINT NOT NULL  ,
   `name` VARCHAR(45) NOT NULL ,
-  `description` VARCHAR(100),
+  `description` VARCHAR(500),
   `status` TINYINT NOT NULL DEFAULT 0,
   `created_date` DATETIME ,
   `last_updated_date` DATETIME ,
@@ -117,7 +117,7 @@ INSERT INTO course_type(`id`,`name`,`description`)
 CREATE  TABLE `course_group` (
   `id` TINYINT NOT NULL  ,
   `name` VARCHAR(45) NOT NULL ,
-  `description` VARCHAR(100),
+  `description` VARCHAR(500),
   `status` TINYINT NOT NULL DEFAULT 0,
   `created_date` DATETIME ,
   `last_updated_date` DATETIME ,
@@ -137,7 +137,7 @@ INSERT INTO course_group(`id`,`name`,`description`)
 CREATE  TABLE `course_level` (
   `id` TINYINT NOT NULL  ,
   `name` VARCHAR(45) NOT NULL ,
-  `description` VARCHAR(100),
+  `description` VARCHAR(500),
   `status` TINYINT NOT NULL DEFAULT 0,
   `created_date` DATETIME ,
   `last_updated_date` DATETIME ,
@@ -156,7 +156,7 @@ INSERT INTO course_level(`id`,`name`,`description`)
 CREATE  TABLE `college_type` (
   `id` TINYINT NOT NULL  ,
   `name` VARCHAR(45) NOT NULL ,
-  `description` VARCHAR(100),
+  `description` VARCHAR(500),
   `status` TINYINT NOT NULL DEFAULT 0,
   `created_date` DATETIME ,
   `last_updated_date` DATETIME ,
@@ -178,7 +178,7 @@ CREATE  TABLE `teacher_title` (
   `id` TINYINT NOT NULL  ,
   `name` VARCHAR(45) NOT NULL ,
   `short_name` VARCHAR(45) NOT NULL ,
-  `description` VARCHAR(100),
+  `description` VARCHAR(500),
   `status` TINYINT NOT NULL DEFAULT 0,
   `created_date` DATETIME ,
   `last_updated_date` DATETIME ,
@@ -195,7 +195,7 @@ CREATE  TABLE `education_degree` (
   `full_name` VARCHAR(100) NOT NULL ,
   `short_name` VARCHAR(45) NOT NULL ,
   `status` TINYINT NOT NULL DEFAULT 0,
-  `description` VARCHAR(100),
+  `description` VARCHAR(500),
   `created_date` DATETIME ,
   `last_updated_date` DATETIME ,
   `updated_by` INT,
@@ -209,7 +209,7 @@ CREATE  TABLE `education_department` (
   `name` VARCHAR(45) NOT NULL ,
   `full_name` VARCHAR(100) NOT NULL ,
   `short_name` VARCHAR(45) NOT NULL ,
-  `description` VARCHAR(100),
+  `description` VARCHAR(500),
   `status` TINYINT NOT NULL DEFAULT 0,
   `created_date` DATETIME ,
   `last_updated_date` DATETIME ,
@@ -218,14 +218,6 @@ CREATE  TABLE `education_department` (
    CONSTRAINT UK_education_department_name UNIQUE(name),
    CONSTRAINT FK_education_department_status FOREIGN KEY (`status`) REFERENCES status(`id`)
    );
-
-
-INSERT INTO college_type(`id`,`name`,`short_name`,`department`,`description`)
-       VALUES ('0','Head Of Physics Department1','HOD Of Physics','physics','dsfd'),
-            ('1','Head Of Physics Department2','HOD Of Physics','physics','dsfd'),
-            ('10','Head Of Physics Department3','HOD Of Physics','physics','dsfd'),
-            ('11','Head Of Physics Department4','HOD Of Physics','physics','dsfd'),
-
 
 
 CREATE  TABLE `teaching_experience` (
@@ -439,7 +431,7 @@ CREATE  TABLE `classes_batch` (
   `created_date` DATETIME ,
   `last_updated_date` DATETIME ,
   `updated_by` INT ,
-   CONSTRAINT PK_classes_batch PRIMARY KEY (id)
+   CONSTRAINT PK_classes_batch PRIMARY KEY (id),
    CONSTRAINT FK_classes_batch_status FOREIGN KEY (`status`) REFERENCES status(`id`)
    );
 
@@ -456,7 +448,7 @@ CREATE  TABLE `classes_batch_routine` (
   `created_date` DATETIME ,
   `last_updated_date` DATETIME ,
   `updated_by` INT ,
-   CONSTRAINT PK_classes_batch_routine PRIMARY KEY (id)
+   CONSTRAINT PK_classes_batch_routine PRIMARY KEY (id),
    CONSTRAINT FK_classes_batch_routine_status FOREIGN KEY (`status`) REFERENCES status(`id`)
    );
 
