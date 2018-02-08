@@ -56,6 +56,10 @@ top:50%; margin-left:-190px; margin-top:-160px; width:380px}
  .institute-details li .edit-icon:hover{color:#337ab7}
  .institute-details li:hover .edit-icon{display:block;}
 
+ .institute-details .div-dropdown{position:relative; }
+ .institute-details .dropdown-menu{width:100%}
+ .institute-details .dropdown-menu li{padding:2px 10px; border:none;}
+
 
 
 

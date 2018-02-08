@@ -148,16 +148,38 @@
 			      		<div class="row form-group">
 			      			<div class="col-xs-2 text-right">State</div>
 			      			<div class="col-xs-3">
-			      				<input class="form-control" type="text" value="Aurangabad" />
+			      				<div class="div-dropdown">
+			      					<input class="form-control" type="text" value="Aurangabad" />
+			      					<ul class="dropdown-menu" >
+			      						<li class="ddl-item"><span data-value="1">Bihar</span></li>
+			      						<li class="ddl-item"><span data-value="2">Jharkhand</span></li>
+			      					</ul>
+			      				</div>
 			      			</div>
 			      		</div>
 			      		<div class="row form-group">
 			      			<div class="col-xs-2 text-right">City</div>
-			      			<div class="col-xs-3"><input class="form-control" type="text" value="Aurangabad" /></div>
+			      			<div class="col-xs-3">
+			      				<div class="div-dropdown">
+			      					<input class="form-control" type="text" value="Aurangabad" />
+			      					<ul class="dropdown-menu" >
+			      						<li class="ddl-item"><span data-value="1">Aurangabad</span></li>
+			      						<li class="ddl-item"><span data-value="2">Gaya</span></li>
+			      					</ul>
+			      				</div>	
+			      			</div>
 			      		</div>
 			      		<div class="row form-group">
 			      			<div class="col-xs-2 text-right">Zip</div>
-			      			<div class="col-xs-3"><input class="form-control" type="text" value="Aurangabad" /></div>
+			      			<div class="col-xs-3">
+			      				<div class="div-dropdown">
+			      					<input class="form-control" type="text" value="Aurangabad" />
+			      					<ul class="dropdown-menu" >
+			      						<li class="ddl-item"><span data-value="1">Aurangabad</span></li>
+			      						<li class="ddl-item"><span data-value="2">Gaya</span></li>
+			      					</ul>
+			      				</div>
+			      			</div>
 			      		</div>
 		      			<div class="row">
 		      				<div class="col-xs-6 text-center">
@@ -183,7 +205,7 @@
 	</div>
 
 </div>
-  
+
 @endsection
 
 @section('scripts')
@@ -199,7 +221,17 @@
    	 $('.ins-det-item').show();
    	 $('.ins-det-form').hide();
    })
+   $('.div-dropdown .form-control').on('click', function(event){
+   	 event.stopPropagation();
+   	 $(this).parent('.div-dropdown').find('.dropdown-menu').show();
+   });
+   
+   $(document).click( function(){
+        $('.dropdown-menu').hide();
+    });
+   
  });
+
 
 </script>
 @endsection
