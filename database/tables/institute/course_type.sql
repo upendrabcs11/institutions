@@ -1,21 +1,18 @@
 
-DROP TABLE IF EXISTS `course_type`; 
+DROP TABLE IF EXISTS `course_types`; 
 
-CREATE  TABLE `course_type` (
+CREATE  TABLE `course_types` (
   `id` TINYINT NOT NULL  ,
   `name` VARCHAR(45) NOT NULL ,
-  `description` VARCHAR(100),
-  `status` TINYINT NOT NULL DEFAULT 0,
-  `created_date` DATETIME ,
-  `last_updated_date` DATETIME ,
+  `description` VARCHAR(500),
+  `status_id` TINYINT NOT NULL DEFAULT 0,
+  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` INT,
-   CONSTRAINT PK_course_type PRIMARY KEY (id),
-   CONSTRAINT FK_course_type_status FOREIGN KEY (`status`) REFERENCES status(`id`)
+   CONSTRAINT PK_course_types PRIMARY KEY (id),
+   CONSTRAINT FK_course_types_status FOREIGN KEY (`status_id`) REFERENCES status(`id`)
    );
 
 
-INSERT INTO course_type(`id`,`name`,`description`)
-       VALUES ('0','Normal','not specification'),
-       		  ('1','Normal 1','Active or Live in System or make active by admin '),
-       		  ('2','Normal Inserted By User','When Anonimus user inserted Records and need to verify status will be 10'),
-       		  ('3','NormalVerified By UserItself','User Insert Data and verify By Email or allready Registered User');
+INSERT INTO course_types(`id`,`name`,`description`)
+       VALUES ('0','Not Specified','not specification');

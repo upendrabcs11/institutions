@@ -15,63 +15,131 @@ class LocationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+    public function __construct()
+    {
+        $this->locationModel = new Location();
+        $this->locationBL = new LocationBL();     
+    }
    
     /**  API : Get the details of city based on StateID 
     *           if stateId is 0 then return all citys
     */
-    public function getCity($stateId = 0)
+    public function state(Request $request)
     {
-    	$areaModel = new Location();
-        return $areaModel->getCity($stateId);
+        if($request->isMethod('get')){
+            $stateId = $request->StateId ;
+            return $this->locationModel->getState($stateId);
+        }
+        else{ // method == POST
+            return $this->postState($request);
+        }
     }
     /** API : Get the details of state if stateId is 0 then return details of all state 
      *         else return single id state information 
      */
-    public function getState($stateId = 0) //function state(Request $request) 
+
+    public function city(Request $request) //function state(Request $request) 
     {
-    	$areaModel = new Location();
-        return $areaModel->getState($stateId);
+        if($request->isMethod('get')){
+            $stateId = $request->StateId ; 
+            //echo $stateId;           
+            return $this->locationModel->getCityByStateId($stateId);
+        }
+        else{ // method == POST
+            return $this->postCity($request);
+        }
     }
     /** API : Get the Details  of Area based on cityId 
      *         if cityId is 0 or some other value for which area is not available then 405 content not found is return 
      */
-    public function getArea($cityId = 0)
+
+    public function area(Request $request)
     {
-    	$areaModel = new Location();
-        return $areaModel->getArea($cityId);
+        if($request->isMethod('get')){
+            $cityId = $request->CityId ;
+            return $this->locationModel->getAreaByCityId($cityId);
+        }
+        else{ // method == POST
+            return $this->postArea($request);
+        }
     }
-    /**  API : create new city  
-     * 
-     */
-    public function postCity(Request $request)
+
+    /**  API : Get the details of city based on StateID 
+    *           if stateId is 0 then return all citys
+    */
+    public function getStateById(Request $request,$id = 0)
     {
-        $cityDetail = LocationBL::CityAssignDefaultValue($request->all());   // passed parameter
-        $cityDetail['cityId'] = 0;  // make it 0 so it can be insert into db
-        $cityDetail['status'] = 1;
-        $areaModel = new Location();
-        return $areaModel->postCity($cityDetail);
+        return $this->locationModel->getStateById($id);
+    }
+
+    /** API : Get the details of state if stateId is 0 then return details of all state 
+     *         else return single id state information 
+     */
+    public function getCityById(Request $request,$id = 0) //function state(Request $request) 
+    {
+        return $this->locationModel->getCityById($id);
+    }
+
+    /** API : Get the Details  of Area based on cityId 
+     *         if cityId is 0 or some other value for which area is not available then 405 content not found is return 
+     */
+
+    public function getAreaById(Request $request,$id = 0)
+    {
+        return $this->locationModel->getAreaById($id);
     }
     /** API : create New State
      * 
      */
     public function postState(Request $request) //function state(Request $request) 
     {
-        $stateDetail = LocationBL::StateAssignDefaultValue($request->all());   // passed parameter
-        $stateDetail['stateId'] = 0;  // make it 0 so it can be insert into db
-        $stateDetail['status'] = 1;
-        $areaModel = new Location();
-        return $areaModel->postState($stateDetail);
+        $validation = $this->locationBL->addStateValidate($request->all());  // validate institute form data if fails return validation error
+        if($validation->fails()){
+            $errors = $validation->errors();
+            return $errors->toJson();
+        }
+        $stateDetail = $this->locationBL->updateStateKeyMapping($request->all());   // passed parameter
+        $stateDetail['Status'] = 1;
+        return $this->locationModel->addState($stateDetail);
     }
+    /**  API : create new city  
+     * 
+     */
+    public function postCity(Request $request)
+    {
+        // validate institute form data if fails return validation error
+        $validation = $this->locationBL->addCityValidate($request->all());  
+        if($validation->fails()){
+            $errors = $validation->errors();
+            return $errors->toJson();
+        }
+        // check if this city exist 
+        $city = $this->locationModel->getCityByName($request->StateId, $request->CityName); 
+        if(!$city->isEmpty())
+            return $city;
+
+        $cityDetail = $this->locationBL->updateCityKeyMapping($request->all());   // passed parameter
+        $cityDetail['Status'] = 1;
+        return $this->locationModel->addCity($cityDetail);
+    }
+    
     /**  API : Create new AreaCode in city 
      * 
      */
     public function postArea(Request $request)
     {
-        $areaDetail = LocationBL::AreaAssignDefaultValue($request->all());  // passed parameter
-        $areaDetail['areaId'] = 0;  // make it 0 so it can be insert into db
-        $areaDetail['status'] = 1;
-        $areaModel = new Location();
-        return $areaModel->postArea($areaDetail);
+        // validate institute form data if fails return validation error
+        $validation = $this->locationBL->addAreaValidate($request->all()); 
+        if($validation->fails()){
+            $errors = $validation->errors();
+            return $errors->toJson();
+        }
+        $area = $this->locationModel->getAreaByName($request->CityId, $request->AreaName); 
+        if(!$area->isEmpty())
+            return $area;
+
+        $areaDetail = $this->locationBL->updateAreaKeyMapping($request->all());  // passed parameter
+        $areaDetail['Status'] = 1;
+        return $this->locationModel->addArea($areaDetail);
     }
 }

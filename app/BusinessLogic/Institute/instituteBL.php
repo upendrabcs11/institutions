@@ -11,30 +11,61 @@ use App\Common\UserCommon ;
 
 class InstituteBL 
 {
-    public static function instituteAssignDefaultValue($instituteInfo)
+    public static function updateInstituteKeyMapping($insInfo)
     {
-    	$institute ;
-        //basic info
-    	$institute['Name'] = isset($instituteInfo['instituteName']) ? $instituteInfo['instituteName'] : "" ;
-        $institute['ShortName'] = isset($instituteInfo['instituteShortName']) ? $instituteInfo['instituteShortName'] : "" ;
-        $institute['FullName'] = isset($instituteInfo['instituteFullName']) ? $instituteInfo['instituteFullName'] : "" ;
-        $institute['ParentId'] = isset($instituteInfo['instituteParentId']) ? $instituteInfo['instituteParentId'] : "" ;
-        $institute['TypeId'] = isset($instituteInfo['instituteType']) ? $instituteInfo['instituteType'] : 0 ;
-        $institute['RunningSince'] = isset($instituteInfo['instituteRunningSince']) ? $instituteInfo['instituteRunningSince'] : "" ;
-        $institute['Summary'] = isset($instituteInfo['summary']) ? $instituteInfo['summary'] : "" ;
-
+    	$institute =[];
+    	$institute['Name'] = isset($insInfo['InstituteName'])? $insInfo['InstituteName'] : null ;
         //address
-        $institute['StateName'] = isset($instituteInfo['state']) ? $instituteInfo['state'] : '' ;
-        $institute['StateId'] = isset($instituteInfo['stateId']) ? $instituteInfo['stateId'] : '0';
-        $institute['CityId'] = isset($instituteInfo['cityId']) ? $instituteInfo['cityId'] : '' ;
-        $institute['CityName'] = isset($instituteInfo['city']) ? $instituteInfo['city'] : '0' ;
-        $institute['AreaName'] = isset($instituteInfo['cityArea']) ? $instituteInfo['cityArea'] : '' ;
-        $institute['AreaId'] = isset($instituteInfo['areaId']) ? $instituteInfo['areaId'] : '0' ;
-        $institute['Address'] = isset($instituteInfo['address']) ? $instituteInfo['address'] : '' ;
+        $institute['StateName'] = isset($insInfo['State'])? $insInfo['State'] : null ;
+        $institute['StateId'] =   isset($insInfo['StateId'])? $insInfo['StateId'] : null ;
+        $institute['CityId'] =  isset($insInfo['CityId'])? $insInfo['CityId'] : null ;
+        $institute['CityName'] = isset($insInfo['City'])? $insInfo['City'] : null ;
+        $institute['AreaName'] = isset($insInfo['CityArea'])? $insInfo['CityArea'] : null ;
+        $institute['AreaId'] = isset($insInfo['CityAreaId'])? $insInfo['CityAreaId'] : null ;
+        $institute['Address'] =  isset($insInfo['Address'])? $insInfo['Address'] : null ;
 
-        $institute['Status'] = isset($instituteInfo['status']) ? $instituteInfo['status'] : '0' ;
+        $institute['ShortName'] = isset($insInfo['InstituteShortName'])? 
+                                                    $insInfo['InstituteShortName'] : null ;
+        $institute['FullName'] = isset($insInfo['InstituteFullName'])? 
+                                                    $insInfo['InstituteFullName'] : null ;
+        $institute['ParentId'] = isset($insInfo['InstituteParentId'])? 
+                                                    $insInfo['InstituteParentId'] : null ;
+
+        $institute['RunningSince'] =  isset($insInfo['InstituteRunningSince'])? 
+                                                    $insInfo['InstituteRunningSince'] : null ;
+        $institute['Summary'] = isset($insInfo['InstituteSummary'])? 
+                                        $insInfo['InstituteSummary'] : null ;
+
+        // at time of insertation
+        $institute['Status'] =isset($insInfo['Status'])? $insInfo['Status'] : null ; 
+        $institute['TypeId'] = isset($insInfo['InstituteTypeId'])? $insInfo['InstituteTypeId'] : null ;
+        $institute['UserId'] = UserCommon::getLoogedInUserId();
         return $institute ;
 
+    }
+      
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public static function registrationValidation(array $data)
+    {
+        return Validator::make($data, [
+            'InstituteName' =>  array('required','regex:/^[a-zA-Z]+[a-zA-Z1-9. +]{3,}$/u' ),
+            'State' => 'required|max:30',
+            'StateId' => 'required|exists:states,id',
+            'City' => 'required|max:30',
+            'CityId' => 'required|exists:cities,id',
+            'CityArea' => 'required|max:30',
+            'CityAreaId' => 'required|exists:city_areas,id',
+            'FirstName' => 'required|min:3|max:30',
+            'LastName' => 'required|min:3|max:30',
+            'email' => 'required|email|max:255|unique:users',
+            'MobileNo' => 'required|digits:10',
+            'password' => 'required|min:6|confirmed',
+        ]);
     }
     /**
      * Get a validator for an incoming registration request.
@@ -42,39 +73,50 @@ class InstituteBL
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    public static function instituteRegistration(array $data)
+    public static function basicInfoValidation(array $data)
     {
         return Validator::make($data, [
-            'instituteName' =>  array('required','regex:/^[a-zA-Z]+[a-zA-Z1-9. +]{3,}$/u' ),
-            'state' => 'required|max:30',
-            'stateId' => 'required|digits:1',
-            'city' => 'required|max:30',
-            'cityId' => 'required|digits:1' ,
-            'cityArea' => 'required|max:30',
-            'areaId' => 'required|digits:1',
-            'firstName' => 'required|max:30',
-            'lastName' => 'required|max:30',
-            'email' => 'required|email|max:255|unique:users',
-            'mobileNo' => 'required|digits:10',
-            'password' => 'required|min:6|confirmed',
+            'InstituteName' =>  array('required','regex:/^[a-zA-Z]+[a-zA-Z1-9. +]{3,}$/u' ),
+            'RunningSince' => 'nullable|date',
+            'ParentId' => 'nullable|exists:institutes,id',
+            'InstituteType' => 'required|exists:institute_types,id',
         ]);
     }
-
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public static function instituteAddress(array $data)
+    {
+        return Validator::make($data, [
+            'State' => 'required|max:30',
+            'StateId' => 'required|exists:states,id',
+            'City' => 'required|max:30',
+            'CityId' => 'required|exists:cities,id',
+            'CityArea' => 'required|max:30',
+            'CityAreaId' => 'required|exists:city_areas,id',
+        ]);
+    }
         /**
          *  method to check user is instituteadmin or super admin 
          */ 
     public static function hasPermissionToUpdate($institute_id){
-        if(UserCommon::isLoogedInUserSuperAdmin())
-            return true;
+        if(UserCommon::isLoogedInUserSuperAdmin()){
+           return true; 
+         }
+            
+
         $user_id = UserCommon::getLoogedInUserId();
         if($user_id == 0)
             return false;
         $instituteModel = new Institute();
 
         $institute = $instituteModel->getInstituteByInstituteId($institute_id);
-        echo $institute;
-        if($user_id == $institute[0]->AdminId)
+        if($user_id == $institute[0]->AdminUserId)
             return true;
+
         return false;
     }   
 }

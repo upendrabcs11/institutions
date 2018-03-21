@@ -9,17 +9,24 @@ use App\Common\UserCommon ;
 
 class UserBL 
 {
-    public static function userAssignDefaultValue($userDetail)
+    public static function updateUserKeyMapping($userDetail)
     {
     	$user ;
-    	$user['FirstName'] = isset($userDetail['firstName']) ? $userDetail['firstName'] : "" ;
-        $user['LastName'] = isset($userDetail['lastName']) ? $userDetail['lastName'] : '' ;
-        $user['Email'] = isset($userDetail['email']) ? $userDetail['email'] : "";
-        $user['MobileNo'] = isset($userDetail['mobileNo']) ? $userDetail['mobileNo'] : '' ;
-        $user['Password'] = isset($userDetail['password']) ? $userDetail['password'] : '' ;
-        $user['Status'] = isset($userDetail['status']) ? $userDetail['status'] : '0' ;
-        $user['UserType'] = isset($userDetail['userType']) ? $userDetail['userType'] : '0' ;
+    	$user['FirstName'] = $userDetail['FirstName'] ;
+        $user['LastName'] = $userDetail['LastName'] ;
+        $user['Email'] = $userDetail['email'] ;
+        $user['MobileNo'] = $userDetail['MobileNo']  ;
+        $user['Password'] = $userDetail['password']  ;
 
         return $user ;
+    }
+    public static function buildLoginRequest(Request $request){
+        $req_array = $request->all();
+        if(isset($req_array['Email']))
+             $request->merge(['email' => $req_array['Email']]);
+        if(isset($req_array['Password']))
+             $request->merge(['password' => $req_array['Password']]);
+
+        return $request;
     }
 }

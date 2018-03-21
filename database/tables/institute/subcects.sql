@@ -7,11 +7,11 @@ CREATE  TABLE `subjects` (
   `sort_name` VARCHAR(100) , 
   `full_name` VARCHAR(100),
   `course_id` TINYINT,
-  `status` TINYINT NOT NULL DEFAULT 0,
+  `status_id` TINYINT NOT NULL DEFAULT 0,
   `description` VARCHAR(500),
-  `created_date` DATETIME ,
-  `last_updated_date` DATETIME ,
+  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` INT ,
    CONSTRAINT PK_subjects PRIMARY KEY (id),
-   CONSTRAINT FK_subjects_status FOREIGN KEY (`status`) REFERENCES status(`id`)
+   CONSTRAINT FK_subjects_status FOREIGN KEY (`status_id`) REFERENCES status(`id`)
    );

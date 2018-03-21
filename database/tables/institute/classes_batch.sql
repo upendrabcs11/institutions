@@ -1,7 +1,7 @@
 
-DROP TABLE IF EXISTS `classes_batch`; 
+DROP TABLE IF EXISTS `classes_batchs`; 
 
-CREATE  TABLE `classes_batch` (
+CREATE  TABLE `class_batchs` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(100) NOT NULL ,
   `institute_id` INT NOT NULL , 
@@ -11,11 +11,11 @@ CREATE  TABLE `classes_batch` (
   `batch_end_date` DATE ,
   `start_time` TIME,
   `end_time` TIME,
-  `status` TINYINT NOT NULL,
+  `status_id` TINYINT NOT NULL,
   `description` VARCHAR(500),
-  `created_date` DATETIME ,
-  `last_updated_date` DATETIME ,
+  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` INT ,
-   CONSTRAINT PK_classes_batch PRIMARY KEY (id)
-   CONSTRAINT FK_classes_batch_status FOREIGN KEY (`status`) REFERENCES status(`id`)
+   CONSTRAINT PK_class_batchs PRIMARY KEY (id),
+   CONSTRAINT FK_class_batchs_status FOREIGN KEY (`status_id`) REFERENCES status(`id`)
    );

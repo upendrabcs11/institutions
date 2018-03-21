@@ -1,17 +1,20 @@
 -- USE `institutions`;
-DROP TABLE IF EXISTS `user_type` ; 
+DROP TABLE IF EXISTS `user_types` ; 
 
-CREATE  TABLE `user_type` (
+CREATE  TABLE `user_types` (
   `id` TINYINT NOT NULL  ,
   `name` VARCHAR(45) NOT NULL ,
-  `status` TINYINT,
-  `description` VARCHAR(100),
-   CONSTRAINT PK_status PRIMARY KEY (id),
-   CONSTRAINT FK_user_type_status FOREIGN KEY (`status`) REFERENCES status(`id`)
+  `status_id` TINYINT,
+  `description` VARCHAR(500),
+  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` INT,
+   CONSTRAINT PK_user_types PRIMARY KEY (id),
+   CONSTRAINT FK_user_types_status FOREIGN KEY (`status_id`) REFERENCES status(`id`)
   );
 
-INSERT INTO user_type(`id`,`name`,`description`)
-       VALUES ('0','normal user','Inactive mean it will be not shown to end user - deactivated'),
-       		  ('1','teacher','Active or Live in System or make active by admin '),
-       		  ('10','admin','When Anonimus user inserted Records and need to verify status will be 10'),
-       		  ('11','super admin','User Insert Data and verify By Email or allready Registered User');
+INSERT INTO user_types(`id`,`name`,`description`)
+       VALUES ('0','normal user','normal user whose use application '),
+            ('1','teacher','teachers '),
+            ('10','admin','institute admins'),
+            ('11','super admin',' application admin');

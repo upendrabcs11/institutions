@@ -15,7 +15,7 @@
         <label>City Name</label>
         <div class="city-dropdown">
             <input id="area-city-dropdown" class="form-control" placeholder="Enter city Name" name="city" value="" type="text" />
-            <input id="area-city-id" class="hide" name="cityId" value="0" type="text" />
+            <input id="area-city-id" class="id-field" name="cityId" value="0" type="text" />
             <ul id="area-city-dropdown-list">
               <li><span data-value="1">city-1</span></li>
               <li><span data-value="2">city-2</span></li>

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>{{ config('app.name', '') }}</title>
     <!-- Styles -->
     <link href={{ asset("/css/static/bootstrap.min.css")}} rel="stylesheet">
@@ -43,6 +43,12 @@
   <script type="text/javascript">
    var url_config = url_config || {} ;
        url_config.baseUrl = "{{ url('/') }}"
+   //var HEADERS = { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+   $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
   </script>
   @yield('scripts')
 </body>

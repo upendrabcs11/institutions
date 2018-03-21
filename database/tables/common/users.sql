@@ -9,11 +9,10 @@ CREATE  TABLE `users` (
   `mobile` CHAR(10) ,
   `password` VARCHAR(255) NOT NULL,
   `remember_token` VARCHAR(100) ,
-  `status` TINYINT NOT NULL DEFAULT 0 ,
-  `type`  TINYINT NOT NULL DEFAULT 0,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME ,
+  `status_id` TINYINT NOT NULL DEFAULT 0 ,
+  `user_type_id`  TINYINT NOT NULL DEFAULT 0,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    CONSTRAINT PK_users_id PRIMARY KEY (id),
-   CONSTRAINT FK_users_status FOREIGN KEY (`status`) REFERENCES status(`id`),
-   CONSTRAINT FK_users_type FOREIGN KEY (`type`) REFERENCES user_type(`id`)
+   CONSTRAINT FK_users_status FOREIGN KEY (`status_id`) REFERENCES status(`id`)
   );

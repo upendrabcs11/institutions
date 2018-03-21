@@ -23,12 +23,16 @@ Route::get('/user', function (Request $request) {
 
 Route::group(['namespace' => 'API'], function () {
 	Route::group(['namespace' => 'location'], function () {
-	    Route::get('/city/{stateId?}', 'LocationController@getCity');
-	    Route::get('/area/{cityId?}', 'LocationController@getArea');
-	    Route::get('/state/{stateId?}', 'LocationController@getState');
+	    Route::match(['get', 'post'],'/state', 'LocationController@state');
+	    Route::match(['get', 'post'],'/city', 'LocationController@city');
+	    Route::match(['get', 'post'],'/area', 'LocationController@area');
 
-	    Route::post('/city', 'LocationController@postCity');
-	    Route::post('/area', 'LocationController@postArea');
-	    Route::post('/state', 'LocationController@postState');
+	    Route::get('/state/{id?}', 'LocationController@getStateById');
+	    Route::get('/city/{id?}', 'LocationController@getCityById');
+	    Route::get('/area/{id?}', 'LocationController@getAreaById');
 	});
+
+	
 });
+
+

@@ -11,19 +11,27 @@
 |
 */
 
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () {    return view('welcome'); });
+Route::post('/basic-info/abc/{id?}',   'Institute\InstituteController@updateBasicInfo');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/dashboard/{id?}','DashboardController@index');
 Route::get('/institute-register','Institute\InstituteController@getRegistrationForm');
 Route::post('/institute-register','Institute\InstituteController@postRegistrationForm');
 
+Route::middleware(['auth'])->prefix('dashboard')->group(function () {
+	Route::get('/{id?}','UserDashboardController@index');
+	Route::get('/institute-basic-info/edit-page','Institute\InstituteController@getBasicInfoEditPage');
+	Route::get('/institute-address/edit-page','Institute\InstituteController@getAddressEditPage');
 
-Auth::routes();
+	
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::prefix('institute')->group(function () {
+	Route::post('/basic-info/{id?}',   'Institute\InstituteController@updateBasicInfo');	
+	Route::post('/address/{id?}', 'InstituteController@getCity');
+    
+});
+
+Route::get('/home', 'HomeController@index');

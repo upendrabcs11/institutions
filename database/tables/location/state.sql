@@ -1,15 +1,14 @@
 
-DROP TABLE IF EXISTS `state` ; 
+DROP TABLE IF EXISTS `states` ; 
 
-CREATE  TABLE `state` (
+CREATE  TABLE `states` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
-  `status` TINYINT NOT NULL DEFAULT '0',
-  `type` TINYINT NOT NULL,
-  `created_date` DATE,
-  `last_updated_date` DATE,
+  `status_id` TINYINT NOT NULL DEFAULT '0',
+  `state_type_id` TINYINT NOT NULL,
+  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` INT,
-   CONSTRAINT PK_state PRIMARY KEY (`id`),
-   CONSTRAINT UC_state_name UNIQUE (`name`),
-   CONSTRAINT FK_state_status FOREIGN KEY (`status`) REFERENCES status(`id`)
+   CONSTRAINT PK_states PRIMARY KEY (`id`),
+   CONSTRAINT FK_states_status FOREIGN KEY (`status_id`) REFERENCES status(`id`)
   );

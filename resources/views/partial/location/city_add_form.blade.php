@@ -15,7 +15,7 @@
           <label>State</label>
               <div class="state-dropdown">
                 <input id="city-state-dropdown" class="form-control" placeholder="Enter State Name" name="state" value="" type="text">
-                <input id="city-state-id" class="hide" name="stateId" value="0" type="text" />
+                <input id="city-state-id" class="id-field" name="stateId" value="0" type="text" />
                 <ul id="reg-state-dropdown-list">
                   <li><span data-value="1">Bihar</span></li>
                   <li><span data-value="2">Utar pradesh</span></li>

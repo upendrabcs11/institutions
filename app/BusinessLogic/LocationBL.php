@@ -1,64 +1,97 @@
 <?php
 
 namespace App\BusinessLogic;
+use Illuminate\Http\Request ;
+use Illuminate\Support\Facades\Validator ;
+use Illuminate\Support\Facades\Auth ;
 use App\Common\UserCommon ;
+use App\Model\location\Location ;
 
 class LocationBL 
 {
+
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public static function StateAssignDefaultValue($stateDetail)
+    public function __construct()
     {
-        $stateDetail['stateName'] = isset($stateDetail['stateName']) ? $stateDetail['stateName'] : "";
-        $stateDetail['stateType'] = isset($stateDetail['stateType']) ? $stateDetail['stateType'] : '0';
-        $stateDetail['userId'] = UserCommon::getLoogedInUserId();
+        $this->locationModel = new Location();
+     
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStateKeyMapping($state)
+    { 
+        $stateDetail['StateName'] = $state['StateName'];
+        $stateDetail['StateType'] = $state['StateType'];
+        $stateDetail['UserId'] = UserCommon::getLoogedInUserId();
         return $stateDetail;
     }
     /** purpose : get states details
      * 
      */
-    public static function CityAssignDefaultValue($cityDetail)
+    public function updateCityKeyMapping($city)
     {
-    	$cityDetail['cityName'] = isset($cityDetail['cityName']) ? $cityDetail['cityName'] : "";
-        $cityDetail['stateId'] = isset($cityDetail['stateId']) ? $cityDetail['stateId'] : '0';
-        $cityDetail['baseUrl'] = isset($cityDetail['baseUrl']) ? $cityDetail['baseUrl'] : "";
-        $cityDetail['imgUrl'] = isset($cityDetail['imgUrl']) ? $cityDetail['imgUrl'] : "";
-        $cityDetail['userId'] = UserCommon::getLoogedInUserId();
+    	$cityDetail['CityName'] = $city['CityName'];
+        $cityDetail['StateId'] = $city['StateId'];
+        $cityDetail['BaseUrl'] = isset($city['BaseUrl']) ? $city['BaseUrl'] : "";
+        $cityDetail['ImgUrl'] =  isset($city['ImgUrl']) ? $city['ImgUrl'] : "";
+        $cityDetail['UserId'] = UserCommon::getLoogedInUserId();
         return $cityDetail;
     }
     /** purpose : get citys details
      * 
      */
-    public static function AreaAssignDefaultValue($areaDetail)
+    public function updateAreaKeyMapping($area)
     {
-        $areaDetail['areaName'] = isset($areaDetail['areaName']) ? $areaDetail['areaName'] : "";
-        $areaDetail['cityId'] = isset($areaDetail['cityId']) ? $areaDetail['cityId'] : '0';
-        $areaDetail['pinCode'] = isset($areaDetail['pinCode']) ? $areaDetail['pinCode'] : "";
-        $areaDetail['userId'] = UserCommon::getLoogedInUserId();
+        $areaDetail['AreaName'] =  $area['AreaName'];
+        $areaDetail['CityId'] = $area['CityId'];
+        $areaDetail['PinCode'] = isset($area['PinCode']) ? $area['PinCode'] : null;
+        $areaDetail['UserId'] = UserCommon::getLoogedInUserId();
         return $areaDetail;
+    }
+    
+    /** purpose : add / update cityArea details
+     * 
+     */
+    public function addStateValidate($state)
+    {
+        return Validator::make($state, [
+            //'StateName' =>  array('required|exists:state_types,id','regex:/^([a-zA-Z]+){3,}$/u' ),
+            'StateName' =>  'required|string|unique:states,name',
+            'StateType' => 'required|exists:state_types,id',
+        ]);       
+        // array(
+        //     'required',
+        //     'regex:/(^([a-zA-Z]+)(\d+)?$)/u'
+        // )
+       // 'mission_id' => 'required|exists:missions,id',
     }
     /** purpose : add / update cityArea details
      * 
      */
-    public function postArea($areaDetail)
+    public function addCityValidate($city)
     {
-       
+        return Validator::make($city, [
+            'CityName' =>  'required|string||min:3|max:60',
+            'StateId' => 'required|exists:states,id',
+            'BaseUrl' => 'sometimes|required|max:100',
+            'ImgUrl' => 'sometimes|required|max:100',
+        ]);       
     }
-    /**  purpose : add / update state details
-     * 
-     */
-    public function postState($stateDetail)
+
+   public function addAreaValidate($area)
     {
-       
-    }
-    /** purpose : add / update city details
-     * 
-     */
-    public function postCity($cityDetail)
-    {
-        
+        return Validator::make($area, [
+            'AreaName' =>  'required|string||min:3|max:60',
+            'CityId' => 'required|exists:cities,id',
+            'PinCode' => 'nullable|numeric|min:100000|max:999999',
+        ]);       
     }
 }

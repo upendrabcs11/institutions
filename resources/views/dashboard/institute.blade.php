@@ -51,7 +51,7 @@
 		    </div>
 
 		</div>
-		
+
 		<div class="dashboard-content">
 
 		<!-- Tab Pannel -->
@@ -64,8 +64,7 @@
 		    <div id="institute" class="tab-pane fade in active">
 		      <h3>Institute basic info </h3>
 		      <ul class="institute-details">
-		      	<li>
-		      		
+		      	<li id="institute-basic-info">		      		
 		      		<div class="ins-det-item">
 		      			@if($institute->Name)
 				      		<div class="row">
@@ -97,41 +96,17 @@
 				      			<div class="col-xs-10">{{$institute->Status}}</div>
 				      		</div>
 			      		@endif
-			      		<span class="edit-icon"><i class="fa fa-pencil"></i> Edit</span>
+			      		<span class="edit-icon" data-value="instituteBasicInfo">
+			      			<i class="fa fa-pencil"></i> Edit
+			      		</span>
 		      		</div>
 
-		      		<div class="ins-det-form" style="display:none">
-			      		<div class="row form-group">
-			      			<div class="col-xs-2 text-right">Display Name</div>
-			      			<div class="col-xs-10"><input class="form-control" type="text" value="{{$institute->Name}}" /></div>
-			      		</div>
-			      		<div class="row form-group">
-			      			<div class="col-xs-2 text-right">Short Name</div>
-			      			<div class="col-xs-10"><input class="form-control" type="text" value="{{$institute->ShortName}}" /></div>
-			      		</div>
-			      		<div class="row form-group">
-			      			<div class="col-xs-2 text-right">Full Name</div>
-			      			<div class="col-xs-10"><input class="form-control" type="text" value="{{$institute->FullName}}" /></div>
-			      		</div>
-			      		<div class="row form-group">
-			      			<div class="col-xs-2 text-right">Institute Type</div>
-			      			<div class="col-xs-10"><input class="form-control" type="text" value="{{$institute->InstituteType}}" /></div>
-			      		</div>
-			      		<div class="row form-group">
-			      			<div class="col-xs-2 text-right">Institute Status</div>
-			      			<div class="col-xs-10"><input class="form-control" type="text" value="{{$institute->Status}}" /></div>
-			      		</div>
-		      			<div class="row">
-		      				<div class="col-xs-6 text-center">
-		      					<button class="btn btn-sm btn-primary">Save Changes</button>
-		      					<button class="btn btn-sm default btn-cancel">Cancel</button>
-		      				</div>
-		      			</div>
+		      		<div class="ins-det-form" style="display:none">		      			
+			      		
 		      		</div>
 
 		      	</li>
-		      	<li>
-
+		      	<li id="institute-address">
 		      		<div class="ins-det-item">
 			      		<div class="row">
 			      			<div class="col-xs-2"><label>Address</label></div>
@@ -141,52 +116,13 @@
 			      				{{$institute->PinCode}}
 			      			</div>
 			      		</div>
-			      		<span class="edit-icon"><i class="fa fa-pencil"></i> Edit</span>
+			      		<span class="edit-icon" data-value="instituteAddress">
+			      			<i class="fa fa-pencil"></i> Edit
+			      		</span>
 		      		</div>
 
 		      		<div class="ins-det-form" style="display:none">
-			      		<div class="row form-group">
-			      			<div class="col-xs-2 text-right">State</div>
-			      			<div class="col-xs-3">
-			      				<div class="div-dropdown">
-			      					<input class="form-control" type="text" value="Aurangabad" />
-			      					<ul class="dropdown-menu" >
-			      						<li class="ddl-item"><span data-value="1">Bihar</span></li>
-			      						<li class="ddl-item"><span data-value="2">Jharkhand</span></li>
-			      					</ul>
-			      				</div>
-			      			</div>
-			      		</div>
-			      		<div class="row form-group">
-			      			<div class="col-xs-2 text-right">City</div>
-			      			<div class="col-xs-3">
-			      				<div class="div-dropdown">
-			      					<input class="form-control" type="text" value="Aurangabad" />
-			      					<ul class="dropdown-menu" >
-			      						<li class="ddl-item"><span data-value="1">Aurangabad</span></li>
-			      						<li class="ddl-item"><span data-value="2">Gaya</span></li>
-			      					</ul>
-			      				</div>	
-			      			</div>
-			      		</div>
-			      		<div class="row form-group">
-			      			<div class="col-xs-2 text-right">Zip</div>
-			      			<div class="col-xs-3">
-			      				<div class="div-dropdown">
-			      					<input class="form-control" type="text" value="Aurangabad" />
-			      					<ul class="dropdown-menu" >
-			      						<li class="ddl-item"><span data-value="1">Aurangabad</span></li>
-			      						<li class="ddl-item"><span data-value="2">Gaya</span></li>
-			      					</ul>
-			      				</div>
-			      			</div>
-			      		</div>
-		      			<div class="row">
-		      				<div class="col-xs-6 text-center">
-		      					<button class="btn btn-sm btn-primary">Save Changes</button>
-		      					<button class="btn btn-sm default btn-cancel">Cancel</button>
-		      				</div>
-		      			</div>
+			      	
 		      		</div>
 
 		      	</li>
@@ -199,7 +135,6 @@
 		  </div>
 
 		<span> {{$institute->Name}} </span>
-
 		</div>
 
 	</div>
@@ -211,27 +146,73 @@
 @section('scripts')
 <script type="text/javascript" src={{ asset("/js/page/institute_registration.js")}}></script>
 <script type="text/javascript">
-
+ var instituteDashbord = {};
+  instituteDashbord.InstituteId = {{$institute->InstituteId}}
  $(document).ready(function(){ 
    $('.edit-icon').on('click', function(){
+   	//get edit page 
+   	 getDashboardEditPage($(this).attr('data-value'),$(this).parent().parent().find('.ins-det-form'))
    	 $(this).parent('.ins-det-item').hide();
    	 $(this).parent().parent().find('.ins-det-form').show();
    })
-   $('.btn-cancel').on('click', function(){
-   	 $('.ins-det-item').show();
-   	 $('.ins-det-form').hide();
+
+   $(".tab-content").on("click",'.btn-cancel', function(){
+   	   $('.ins-det-item').show();
+   	   $('.ins-det-form').hide();
    })
-   $('.div-dropdown .form-control').on('click', function(event){
-   	 event.stopPropagation();
-   	 $(this).parent('.div-dropdown').find('.dropdown-menu').show();
+   $("#institute-basic-info").on("click",'.btn-primary', function(){
+   	   saveInstituteBasicInfo($("#institute-basic-info"))
+   	   $("#institute-basic-info").find('.ins-det-item').show();
+   	   $("#institute-basic-info").find('.ins-det-form').hide();
+   })
+   
+   $(".tab-content").on("click",".div-dropdown .form-control" , function(event){
+   	   event.stopPropagation();
+   	  	$(".tab-content").find('.dropdown-menu').hide();
+   	  	$(this).parent().find('.dropdown-menu').show();
    });
    
+   $(".tab-content").on("click",".dropdown-menu li" , function(event){
+   	   event.stopPropagation();
+   	   var drpdivObj = $(this).parent().parent();
+   	   console.log($(this).find('span').text().trim())
+   	   console.log($(this).find('span').attr('data-value'))
+   	   $(drpdivObj).find('.name-field').val($(this).find('span').text().trim())
+   	   $(drpdivObj).find('.id-field').val($(this).find('span').attr('data-value'))
+
+   	  	$(".tab-content").find('.dropdown-menu').hide();
+   	  	// $(this).parent().find('.dropdown-menu').show();
+   });
+
    $(document).click( function(){
         $('.dropdown-menu').hide();
-    });
-   
+    });   
  });
 
+
+
+ function getDashboardEditPage(pageitem, objBind){
+ 	var needToFetch = true;
+ 	var url = "";
+ 	if(pageitem == "instituteBasicInfo" && !(objBind.children().length > 0) ){
+ 		url = '/dashboard/institute-basic-info/edit-page';
+ 	}else if(pageitem == "instituteAddress" && !(objBind.children().length > 0) ){
+ 		url = '/dashboard/institute-address/edit-page';
+ 	 }
+
+ 	if(url != ""){
+	 	$.ajax({
+	 			type : "GET",
+	 			url : url_config.baseUrl + url,
+	 			success : function(responce){
+	 			  $(objBind).append(responce);
+	 			},
+	 			error : function(){
+	 				alert('Error');
+	 			}
+	 	});
+	 }
+  }
 
 </script>
 @endsection

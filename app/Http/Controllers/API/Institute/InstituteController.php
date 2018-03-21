@@ -5,10 +5,12 @@ namespace App\Http\Controllers\API\Institute;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use App\Common\UserCommon ;
 
-use  App\BusinessLogic\Institute\InstituteBL;
-use App\Model\Institute\Institute ;
+use  App\BusinessLogic\Institute\instituteBL;
+use App\Model\Institute\institute ;
+
 class InstituteController extends Controller
 {
     /**
@@ -22,13 +24,15 @@ class InstituteController extends Controller
     }
     /**  API : Update status of institute  
     */
-    public function updateInstituteStatus(Request $request, $institute_id)
+    public function updateInstituteStatus(Request $request, $id)
     {
-        if(InstituteBL::hasPermissionToUpdate($institute_id)){
+      return null;
+        //return $request->user();
+        if(InstituteBL::hasPermissionToUpdate($id)){
           $instituteInfo = InstituteBL::instituteAssignDefaultValue($request->all());
-    	  //$instituteModel = new Institute(UserCommon::getLoogedInUserId());
+        //$instituteModel = new Institute(UserCommon::getLoogedInUserId());
 
-          return $this->instituteModel->updateInstituteStatus($instituteInfo,$institute_id);
+          return $this->instituteModel->updateInstituteStatus($instituteInfo,$id);
        }
        return "Permission Dennied ";
     }
@@ -36,24 +40,25 @@ class InstituteController extends Controller
     /**  API : Get the details of city based on StateID 
     *           if stateId is 0 then return all citys
     */
-    public function updateInstituteBasicInfo(Request $request, $institute_id)
+    public function updateInstituteBasicInfo(Request $request, $id) // id is instituteId
     {
-        if(InstituteBL::hasPermissionToUpdate($institute_id)){
+      echo Auth::user()->id;
+        if(InstituteBL::hasPermissionToUpdate($id)){
           $instituteInfo = InstituteBL::instituteAssignDefaultValue($request->all());
           //$instituteModel = new Institute(UserCommon::getLoogedInUserId());
-          return $this->instituteModel->updateInstituteBasicInfo($instituteInfo,$institute_id);
+          return $this->instituteModel->updateInstituteBasicInfo($instituteInfo,$id);
        }
        return "Permission Dennied ";
     }
     /**  API : Get the details of city based on StateID 
     *           if stateId is 0 then return all citys
     */
-    public function updateInstituteAddress(Request $request, $institute_id)
+    public function updateInstituteAddress(Request $request, $id) // id is instituteId
     {
-       if(InstituteBL::hasPermissionToUpdate($institute_id)){
+       if(InstituteBL::hasPermissionToUpdate($id)){
           $instituteInfo = InstituteBL::instituteAssignDefaultValue($request->all());
           //$instituteModel = new Institute(UserCommon::getLoogedInUserId());
-          return $this->instituteModel->updateInstituteAddress($instituteInfo,$institute_id);
+          return $this->instituteModel->updateInstituteAddress($instituteInfo,$id);
        }
        return "Permission Dennied ";
     }

@@ -9,11 +9,11 @@ CREATE  TABLE `courses` (
   `course_type_id` TINYINT ,
   `course_group_id` TINYINT,
   `course_level_id` TINYINT,
-  `status` TINYINT NOT NULL,
+  `status_id` TINYINT NOT NULL,
   `description` VARCHAR(500),
-  `created_date` DATETIME ,
-  `last_updated_date` DATETIME ,
+  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` INT ,
    CONSTRAINT PK_courses PRIMARY KEY (id),
-   CONSTRAINT FK_courses_status FOREIGN KEY (`status`) REFERENCES status(`id`)
+   CONSTRAINT FK_courses_status FOREIGN KEY (`status_id`) REFERENCES status(`id`)
    );

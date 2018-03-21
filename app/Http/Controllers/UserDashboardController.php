@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use  Illuminate\Support\Facades\Auth;
 use App\Common\UserCommon ;
-use App\Model\common\Institute ;
+use App\Model\Institute\institute ;
 
-class DashboardController extends Controller
+class UserDashboardController extends Controller
 {
     /**
      * Create a new controller instance.
