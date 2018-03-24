@@ -112,5 +112,21 @@ class InstituteController extends Controller
        return "Permission Dennied ";
     }
 
+    public function updateAddress(Request $request, $id)
+    {
+        //return $request->all();
+        if(InstituteBL::hasPermissionToUpdate($id)){
+            $validation = InstituteBL::instituteAddress($request->all());
+            if($validation->fails()){
+                $errors = $validation->errors();
+                return $errors->toJson();
+            }
+          $instituteInfo = InstituteBL::updateInstituteKeyMapping($request->all());
+          //return $instituteInfo;
+          $institute = $this->instituteModel->updateInstituteAddress($instituteInfo,$id);
+          return $institute;          
+       }
+       return "Permission Dennied ";
+    }
 
 }

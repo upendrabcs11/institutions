@@ -23,6 +23,7 @@ USE `institutions`;
  DROP TABLE IF EXISTS `city_areas` ; 
  DROP TABLE IF EXISTS `cities` ; 
  DROP TABLE IF EXISTS `states` ; 
+ DROP TABLE iF EXISTS `state_types` ;
 
 
 -- drop dependentable table
@@ -248,7 +249,15 @@ CREATE  TABLE `teaching_experiences` (
 
 
 
-
+CREATE  TABLE `state_types` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NOT NULL ,
+  `status_id` TINYINT NOT NULL DEFAULT '0',
+  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` INT,
+   CONSTRAINT PK_state_types PRIMARY KEY (`id`)
+  );
 
 
 

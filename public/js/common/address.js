@@ -52,7 +52,10 @@ var getLocation = {
 	 GetLocationPopUpPage : function(popForm) {
 	 	  var needtoBringForm = true;
 	 	  var popUpUrl = "";
-	 		if(popForm == "StateName"){
+	 	   if(!strLocation.IsNeededPopUpForm)
+	 	   		needtoBringForm = false;
+
+	 	   else if(popForm == "StateName"){
 	 			    popUpUrl = '/html/add-state-form.html' ;
 		 			if(getLocation.CurrentPopUpForm == "StateName")
 			 			needtoBringForm = false;
@@ -96,7 +99,7 @@ var getLocation = {
 		 	 }else if(type == 'CityArea'){
 		 	 	bindLocation.CityArea(filter);
 		 	 }else{
-		 	 	console.log(type);
+		 	 	//console.log(type);
 		 	 }
 		   },
 		 State : function(filter){		 
@@ -104,41 +107,61 @@ var getLocation = {
 		 		var drpdwnObj = $(strLocation.stateDiv).find(".dropdown-menu").empty();
 		        bindLocation.Data(filter,10,drpdwnObj,getLocation.StoredValue.State,"StateId","StateName");
 		        
-		        var isFound = dataFilter.getObjectWithId(getLocation.StoredValue.State,
-		        			$(strLocation.stateDiv).find(".id-field").val(), "StateId");
+		        var isFound = dataFilter.getObject(getLocation.StoredValue.State,
+		        			$(strLocation.stateDiv).find(".id-field").val(), filter,"StateId","StateName");
+		        // reset city and area
+		        $(strLocation.cityDiv).find(".form-control").val("");
+		        $(strLocation.areaDiv).find(".form-control").val("");
 
-		        if(!(isFound && isFound['StateName'].toLowerCase() == filter.toLowerCase())) {
-		        	$(strLocation.stateDiv).find(".id-field").val(0);                    
-		        	getLocation.APICall.GetCity(isFound['StateId']);		        	
+		        if(isFound) {	
+		        	$(strLocation.stateDiv).find(".id-field").val(isFound['StateId']);		        	
+		        	$(strLocation.stateDiv).find(".form-control").val(isFound['StateName']);
+		        	getLocation.APICall.GetCity(isFound['StateId']);
 		          }
-		        $(strLocation.stateDiv).find(".form-control").val(filter);
+		         else{
+		         	$(strLocation.stateDiv).find(".id-field").val(0); 
+		         	$(strLocation.stateDiv).find(".form-control").val(filter);
+		         }
+		        
 		    },
 		 City : function(filter){
 		 		var cityId = $(strLocation.cityDiv).find(".id-field").val();
 		 		var drpdwnObj = $(strLocation.cityDiv).find(".dropdown-menu").empty();
 		        bindLocation.Data(filter,10,drpdwnObj,getLocation.StoredValue.City,"CityId","CityName");
 		       
-		       var isFound = dataFilter.getObjectWithId(getLocation.StoredValue.City,
-		        			$(strLocation.cityDiv).find(".id-field").val(), "CityId");
+		       var isFound = dataFilter.getObject(getLocation.StoredValue.City,
+		        			$(strLocation.cityDiv).find(".id-field").val(),filter, "CityId","CityName");
+		       // reset area
+		        $(strLocation.areaDiv).find(".form-control").val("");
 
-		        if(!(isFound && isFound['CityName'].toLowerCase() == filter.toLowerCase())) {
-		        	$(strLocation.cityDiv).find(".id-field").val(0);                    
-		        	getLocation.APICall.GetArea(isFound['CityId']);		        	
+		        if(isFound) {
+		        	$(strLocation.cityDiv).find(".id-field").val(isFound['CityId']);
+		        	$(strLocation.cityDiv).find(".form-control").val(isFound['CityName']);                     
+		        	getLocation.APICall.GetArea(isFound['CityId']);		        	       	
 		          }
-		        $(strLocation.cityDiv).find(".form-control").val(filter); 
+		         else{
+		         	$(strLocation.cityDiv).find(".id-field").val(0);
+		         	$(strLocation.cityDiv).find(".form-control").val(filter);
+		         }
+		         
 		    },
 		 CityArea : function(filter){
 		 		var areaId = $(strLocation.areaDiv).find(".id-field").val();
 		 		var drpdwnObj = $(strLocation.areaDiv).find(".dropdown-menu").empty();
 		        bindLocation.Data(filter,10,drpdwnObj,getLocation.StoredValue.CityArea,"AreaId","AreaName");
 		     	
-		     	var isFound = dataFilter.getObjectWithId(getLocation.StoredValue.CityArea,
-		        			$(strLocation.areaDiv).find(".id-field").val(), "AreaId");
-
-		        if(!(isFound && isFound['AreaName'].toLowerCase() == filter.toLowerCase())) {
-		        	$(strLocation.areaDiv).find(".id-field").val(0); 		        	
+		     	var isFound = dataFilter.getObject(getLocation.StoredValue.CityArea,
+		        			$(strLocation.areaDiv).find(".id-field").val(),filter, "AreaId","AreaName");
+		     	
+		        if(isFound) {
+		        	$(strLocation.areaDiv).find(".id-field").val(isFound['AreaId']);
+		        	$(strLocation.areaDiv).find(".form-control").val(isFound['AreaName']);
 		          }
-		        $(strLocation.areaDiv).find(".form-control").val(filter);  
+		        else{
+		        	$(strLocation.areaDiv).find(".id-field").val(0);
+		        	$(strLocation.areaDiv).find(".form-control").val(filter);  
+		        }
+		        
 		    },
 		 Data : function(filter,count,obj,data,id,name){
 		   	     var Datafilter = dataFilter.FilterSearchData(filter,count,data,id,name);
@@ -230,7 +253,7 @@ var addLocation = {
             state = {};
             state.StateName = $(strLocation.popUpForm).find("#state-form-state").find(".form-control").val();
             state.StateType = $(strLocation.popUpForm).find("#state-form-state-type").find(".form-control").val();
-            console.log(state);
+            //console.log(state);
             return state;
 	 	  },
 	   City : function(){
@@ -238,7 +261,7 @@ var addLocation = {
             city.StateName =$(strLocation.popUpForm).find("#city-form-state").find(".form-control").val();
             city.StateId = $(strLocation.popUpForm).find("#city-form-state").find(".id-field").val();
             city.CityName =	$(strLocation.popUpForm).find("#city-form-city").find(".form-control").val(); 
-            console.log(city);
+            //console.log(city);
             return city;
 	     },
 	  CityArea : function(){
@@ -247,7 +270,7 @@ var addLocation = {
             area.CityId = $(strLocation.popUpForm).find("#area-form-city").find(".id-field").val();
             area.AreaName =	$(strLocation.popUpForm).find("#area-form-area").find(".form-control").val();
             area.PinCode = $(strLocation.popUpForm).find("#area-form-pin-code").find(".form-control").val();
-            console.log(area);
+            //console.log(area);
             return area;
 	    }
 	 },
@@ -338,12 +361,14 @@ var dataFilter = {
 		      }); 
 		    return result;
 		  },
-    getObjectWithId : function(data, data_item, id){
+    getObject : function(data, data_item, filter,id,name){
     	   var retData = false;
+    	   //console.log(filter)
     		$.each(data, function (i,item) {
-		         if(parseInt(data_item) == parseInt(item[id])) {
-		         	retData =  data[i];		         	
-		         }
+    			//console.log(item)
+		      if(!retData && (data_item ==item[id])){
+		         	retData =  item; 		         	
+		        }
 		      });
 		    return retData; 
       }

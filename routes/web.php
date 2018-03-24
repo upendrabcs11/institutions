@@ -29,8 +29,8 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
 });
 
 Route::prefix('institute')->group(function () {
-	Route::post('/basic-info/{id?}',   'Institute\InstituteController@updateBasicInfo');	
-	Route::post('/address/{id?}', 'InstituteController@getCity');
+	Route::put('/basic-info/{id?}',   'Institute\InstituteController@updateBasicInfo');	
+	Route::put('/address/{id?}', 'Institute\InstituteController@updateAddress');	
     
 });
 
