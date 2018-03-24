@@ -161,13 +161,14 @@
    var strLocation = strLocation || {};
 
    $(document).ready(function(){ 
-      insReg.instituteNameDiv = $("#reg-institute-name"); 
+      strLocation.IsNeededPopUpForm = true;   
       strLocation.stateDiv = insReg.stateDiv = $("#reg-state");
       strLocation.cityDiv = insReg.cityDiv = $("#reg-city");
       strLocation.areaDiv = insReg.areaDiv = $("#reg-city-area");
       strLocation.addressDiv = insReg.addressDiv = $("#reg-address"); 
       strLocation.popUpForm = insReg.popup_form = $("#popup-form");
 
+      insReg.instituteNameDiv = $("#reg-institute-name"); 
       insReg.firstNameDiv = $("#reg-first-name"); 
       insReg.lastNameDiv = $("#reg-last-name"); 
       insReg.emailDiv = $("#reg-email"); 
@@ -188,6 +189,7 @@
         event.stopPropagation();
         $(".signUp").find('.dropdown-menu').hide();
         //console.log($(this).val())
+        $(this).parent().find('.id-field').val(0);
         bindLocation.Dropdown($(this).val(),$(this).attr("name"));
         $(this).parent().find('.dropdown-menu').show();
       });
@@ -229,9 +231,11 @@
        $(droDivObj).find(".dropdown-menu").hide(); 
        if(id != $(droDivObj).find(".id-field").val())  {                    
             if($(droDivObj).find(".dropdown-menu").attr("data-value") == 'State'){ 
+                $(strLocation.cityDiv).find(".id-field").val(0);
                 getLocation.APICall.GetCity(id);
 
-            } else if($(droDivObj).find(".dropdown-menu").attr("data-value") == 'City'){  
+            } else if($(droDivObj).find(".dropdown-menu").attr("data-value") == 'City'){
+                $(strLocation.areaDiv).find(".id-field").val(0);  
                 getLocation.APICall.GetArea(id);
            }
        }

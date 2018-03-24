@@ -157,14 +157,22 @@
    })
 
    $(".tab-content").on("click",'.btn-cancel', function(){
-   	   $('.ins-det-item').show();
    	   $('.ins-det-form').hide();
+   	   $('.ins-det-item').show();   	   
    })
    $("#institute-basic-info").on("click",'.btn-primary', function(){
-   	   saveInstituteBasicInfo($("#institute-basic-info"))
-   	   $("#institute-basic-info").find('.ins-det-item').show();
-   	   $("#institute-basic-info").find('.ins-det-form').hide();
+   	   if(updateInstituteBasicInfo($("#institute-basic-info"))){
+	   	   $("#institute-basic-info").find('.ins-det-item').show();
+	   	   $("#institute-basic-info").find('.ins-det-form').hide();
+	   	}
    })
+   $("#institute-address").on("click",'.btn-primary', function(){
+   	   if(updateInstituteAddress($("#institute-address"))){
+	   	   $("#institute-address").find('.ins-det-item').show();
+	   	   $("#institute-address").find('.ins-det-form').hide();
+	   	}
+   })
+
    
    $(".tab-content").on("click",".div-dropdown .form-control" , function(event){
    	   event.stopPropagation();
@@ -175,8 +183,8 @@
    $(".tab-content").on("click",".dropdown-menu li" , function(event){
    	   event.stopPropagation();
    	   var drpdivObj = $(this).parent().parent();
-   	   console.log($(this).find('span').text().trim())
-   	   console.log($(this).find('span').attr('data-value'))
+   	   //console.log($(this).find('span').text().trim())
+   	   //console.log($(this).find('span').attr('data-value'))
    	   $(drpdivObj).find('.name-field').val($(this).find('span').text().trim())
    	   $(drpdivObj).find('.id-field').val($(this).find('span').attr('data-value'))
 

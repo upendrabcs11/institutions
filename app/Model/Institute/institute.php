@@ -132,10 +132,25 @@ class Institute
      */
     public function updateInstituteAddress($insInfo,$instituteId)
     {
-        $updateParam = array($instituteId, $insInfo['StateId'],$insInfo['CityId'],
-             $insInfo['AreaId'],$insInfo['Address'],$this->curUserId);
+        $ins_array = [];
+      if($insInfo['StateId'] != null)
+        $ins_array['state_id'] = $insInfo['StateId'] ;
 
-        $institute = DB::select('call  institute_address_update(?,?,?,?,?,?)', $updateParam);
-        return $institute ;
+      if($insInfo['CityId'] != null)
+        $ins_array['city_id'] = $insInfo['CityId'] ;
+
+      if($insInfo['AreaId'] != null)
+        $ins_array['area_id'] = $insInfo['AreaId'] ;
+
+      if($insInfo['Address'] != null)
+        $ins_array['main_address'] = $insInfo['Address'] ;
+
+      $ins_array['updated_by'] = $insInfo['UserId'];
+
+      DB::table('institutes')
+            ->where('id', $instituteId)
+            ->update($ins_array);
+
+      return $this->getInstituteByInstituteId($instituteId);
     }
 }
