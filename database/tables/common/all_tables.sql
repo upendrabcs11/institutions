@@ -250,7 +250,7 @@ CREATE  TABLE `teaching_experiences` (
 
 
 CREATE  TABLE `state_types` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
+  `id` INT NOT NULL ,
   `name` VARCHAR(45) NOT NULL ,
   `status_id` TINYINT NOT NULL DEFAULT '0',
   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -259,7 +259,9 @@ CREATE  TABLE `state_types` (
    CONSTRAINT PK_state_types PRIMARY KEY (`id`)
   );
 
-
+INSERT INTO state_types(`id`,`name`,`status_id`)
+       VALUES ('1','Normal',1),
+              ('2','Indian Teritory',1);
 
 -- non master tables
 -- location table
