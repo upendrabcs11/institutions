@@ -33,5 +33,10 @@ Route::prefix('institute')->group(function () {
 	Route::put('/address/{id?}', 'Institute\InstituteController@updateAddress');	
     
 });
-
+// teacher url
+Route::prefix('user')->group(function () {
+   Route::group(['namespace' => 'User'], function () {
+	Route::match(['get', 'post'],'/register', 'UserController@register');	
+  }); 
+});
 Route::get('/home', 'HomeController@index');

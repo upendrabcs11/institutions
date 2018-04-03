@@ -14,7 +14,8 @@ CREATE  TABLE `user_types` (
   );
 
 INSERT INTO user_types(`id`,`name`,`description`)
-       VALUES ('0','normal user','normal user whose use application '),
+       VALUES ('0','not define','normal user whose use application '),
             ('1','teacher','teachers '),
             ('10','admin','institute admins'),
-            ('11','super admin',' application admin');
+            ('20','Application Admin','application admin who manage the data and user details with
+                    limited privilege');
