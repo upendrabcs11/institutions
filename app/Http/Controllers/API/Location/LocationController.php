@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API\location;
+namespace App\Http\Controllers\API\Location;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Common\UserCommon ;
 
 use  App\BusinessLogic\LocationBL;
-use App\Model\location\Location ;
+use App\Model\Location\Location ;
 class LocationController extends Controller
 {
     /**

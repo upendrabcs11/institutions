@@ -22,7 +22,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 Route::group(['namespace' => 'API'], function () {
-	Route::group(['namespace' => 'location'], function () {
+	Route::group(['namespace' => 'Location'], function () {
 	    Route::match(['get', 'post'],'/state', 'LocationController@state');
 	    Route::match(['get', 'post'],'/city', 'LocationController@city');
 	    Route::match(['get', 'post'],'/area', 'LocationController@area');

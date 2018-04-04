@@ -1,6 +1,6 @@
 <?php
 
-namespace App\BusinessLogic\institute;
+namespace App\BusinessLogic\Institute;
 
 use Illuminate\Http\Request ;
 use Illuminate\Support\Facades\Validator ;
