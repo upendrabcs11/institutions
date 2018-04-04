@@ -3,7 +3,7 @@
 namespace App\Common;
 use  Illuminate\Support\Facades\Auth;
 use App\User;
-class Looger 
+class Logger 
 {
     /**
      * return looged in user id

@@ -8,12 +8,12 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers ;
 
 use App\Http\Controllers\Controller ;
 use App\Common\UserCommon ;
-use App\Model\common\User ;
-use App\Model\common\instituteCommonType;
+use App\Model\Common\User ;
+use App\Model\Common\InstituteCommonType;
 
-use App\BusinessLogic\user\UserBL ;
-use App\Model\Institute\institute ;
-use App\BusinessLogic\institute\InstituteBL ;
+use App\BusinessLogic\User\UserBL ;
+use App\Model\Institute\Institute ;
+use App\BusinessLogic\Institute\InstituteBL ;
 
 class InstituteController extends Controller
 {
