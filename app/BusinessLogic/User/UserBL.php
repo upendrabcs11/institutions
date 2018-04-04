@@ -1,6 +1,6 @@
 <?php
 
-namespace App\BusinessLogic\user;
+namespace App\BusinessLogic\User;
 
 use Illuminate\Http\Request ;
 use Illuminate\Support\Facades\Validator ;
@@ -17,6 +17,7 @@ class UserBL
         $user['Email'] = $userDetail['email'] ;
         $user['MobileNo'] = $userDetail['MobileNo']  ;
         $user['Password'] = $userDetail['password']  ;
+        $user['UserType'] = isset($userDetail['UserType'])?$userDetail['UserType'] : null ;
 
         return $user ;
     }
