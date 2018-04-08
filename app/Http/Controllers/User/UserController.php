@@ -14,7 +14,7 @@ use App\BusinessLogic\User\UserBL ;
 
 class UserController extends Controller
 {
-    //use AuthenticatesUsers;
+    use AuthenticatesUsers;
     /**
      * Instantiate a new  instance.
      *
@@ -43,12 +43,14 @@ class UserController extends Controller
      */ 
    public function postUserRegister(Request $request){
         $requestArray = $request->all();
+        UserBL::userValidation($requestArray)->validate();
         $userData = UserBL::updateUserKeyMapping($requestArray) ; 
         $userData['Status'] = 1 ;
-        $userData['UserType'] = 1 ;
         $user = $this->userModel->createUser($userData);
         if($user == null){
             return $user ; // notification log error
         }
+        $this->login($request);
+        return redirect('dashboard');
    }
  }

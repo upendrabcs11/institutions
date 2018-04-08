@@ -18,12 +18,7 @@ class User
 
         $id = DB::table('users')->insertGetId($user_array);
         return $this->getUserById($id);
-        //return $id;
-        // $userParam = array($user['FirstName'],$user['LastName'], $user['Email'],$user['MobileNo'],
-        //     bcrypt($user['Password']),$user['Status'],$user['UserType']);
-        // //return $userParam;
-        // $user = DB::select('call  user_create(?,?,?,?,?,?,?)', $userParam);
-        // return $user;
+       
     }
     public function getUserById($id){
         $user = DB::table('users as usr')

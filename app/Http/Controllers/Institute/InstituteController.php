@@ -52,7 +52,7 @@ class InstituteController extends Controller
 
         $userData = UserBL::updateUserKeyMapping($requestArray) ; 
         $userData['Status'] = 1 ;
-        $userData['UserType'] = 1 ;
+        $userData['UserType'] = UserBL::USER_TYPE['InstituteAdmin'] ;
         $user = $this->userModel->createUser($userData);
         if($user == null){
             return $user ; // notification log error
