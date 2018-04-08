@@ -19,7 +19,7 @@ class UserCommon
     public static function getLoogedInUserType(){
       if(Auth::user() == NULL)
           return 0;
-      return Auth::user()->user_type;
+      return Auth::user()->user_type_id;
     }
     /**
      * return looged in user id

@@ -10,6 +10,7 @@ CREATE  TABLE `user_educations` (
   `degree_name` VARCHAR(100),
   `department_id` TINYINT ,
   `department_name` VARCHAR(100) ,
+  `education_level_id` INT ,
   `grade` VARCHAR(10) ,
   `activities` VARCHAR(700) ,
   `start_data` DATE ,  
