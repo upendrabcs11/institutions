@@ -1,16 +1,16 @@
 
 DROP TABLE IF EXISTS `colleges`; 
-
 CREATE  TABLE `colleges` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(100)  NOT NULL,
   `full_name` VARCHAR(100) ,
-  `short_name` VARCHAR(100) , 
+  `short_name` VARCHAR(100) ,
+  `priority` SMALLINT DEFAULT 0, 
   `university_id`  INT, 
   `university_name`  VARCHAR(100),
-  `college_type_id` TINYINT NOT NULL,
-  `status_id` TINYINT NOT NULL,
-  `state_id` TINYINT NOT NULL,
+  `college_type_id` SMALLINT,
+  `status_id` SMALLINT NOT NULL,
+  `state_id` SMALLINT NOT NULL,
   `state_name` VARCHAR(100),
   `city_id` INT NOT NULL,
   `city_name` VARCHAR(100),

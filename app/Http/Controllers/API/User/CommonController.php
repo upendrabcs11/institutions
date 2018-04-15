@@ -1,17 +1,10 @@
 <?php
+namespace App\Http\Controllers\API\User;
 
-namespace App\Http\Controllers\API\Institute;
-
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Common\UserCommon ;
-
-use  App\BusinessLogic\Institute\instituteBL;
-use App\Model\Institute\institute ;
-
-class InstituteController extends Controller
+class CommonController extends Controller
 {
     /**
      * Instantiate a new  instance.
@@ -20,7 +13,7 @@ class InstituteController extends Controller
      */
     public function __construct()
     {
-        $this->instituteModel = new Institute(UserCommon::getLoogedInUserId());
+        //$this->instituteModel = new Institute(UserCommon::getLoogedInUserId());
     }
     /**  API : Update status of institute  
     */
