@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers ;
 
 use App\Http\Controllers\Controller ;
 use App\Common\UserCommon ;
-use App\Model\Common\User ;
+use App\Model\User\User ;
 
 use App\BusinessLogic\User\UserBL ;
 

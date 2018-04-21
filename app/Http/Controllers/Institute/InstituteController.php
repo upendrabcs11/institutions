@@ -8,11 +8,12 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers ;
 
 use App\Http\Controllers\Controller ;
 use App\Common\UserCommon ;
-use App\Model\Common\User ;
-use App\Model\Common\InstituteCommonType;
+use App\Model\User\User ;
+use App\Model\Institute\InstituteType;
+use App\Model\Institute\Institute ;
 
 use App\BusinessLogic\User\UserBL ;
-use App\Model\Institute\Institute ;
+
 use App\BusinessLogic\Institute\InstituteBL ;
 
 class InstituteController extends Controller
@@ -27,7 +28,7 @@ class InstituteController extends Controller
     {
         $this->userModel = new User();
         $this->instituteModel = new Institute(UserCommon::getLoogedInUserId());
-        $this->common = new InstituteCommonType();
+        $this->common = new InstituteType();
      
     }
     /**

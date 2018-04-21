@@ -4,6 +4,14 @@ namespace App\Http\Controllers\API\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Common\UserCommon ;
+use App\BusinessLogic\User\UserBL ;
+
+use App\Model\User\UserType;
+use App\Model\College\College;
+use App\Model\User\EducationDegree;
+
+
 class CommonController extends Controller
 {
     /**
@@ -13,46 +21,54 @@ class CommonController extends Controller
      */
     public function __construct()
     {
-        //$this->instituteModel = new Institute(UserCommon::getLoogedInUserId());
+        // $this->userTypeModel = new UserType();
     }
     /**  API : Update status of institute  
     */
-    public function updateInstituteStatus(Request $request, $id)
-    {
-      return null;
-        //return $request->user();
-        if(InstituteBL::hasPermissionToUpdate($id)){
-          $instituteInfo = InstituteBL::instituteAssignDefaultValue($request->all());
-        //$instituteModel = new Institute(UserCommon::getLoogedInUserId());
-
-          return $this->instituteModel->updateInstituteStatus($instituteInfo,$id);
-       }
-       return "Permission Dennied ";
+    public function getUserType(Request $request)
+    {  
+       $userTypeModel = new UserType();
+       return $userTypeModel->getUserType();
+    }
+    /**
+     * 
+     */
+    public function getCollegeType(Request $request)
+    {  
+       $collegeModel = new College();
+       return $collegeModel->getCollegeType();
+    }
+    /**
+     * 
+     */
+    public function getEducationDegree(Request $request)
+    {  
+       $educationDegreeModel = new EducationDegree();
+       return $educationDegreeModel->getEducationDegree();
+    }
+    /**
+     * 
+     */
+    public function getEducationDepartment(Request $request)
+    {  
+       $educationDepartmentModel = new EducationDegree();
+       return $educationDepartmentModel->getEducationDepartment();
     }
     
     /**  API : Get the details of city based on StateID 
     *           if stateId is 0 then return all citys
     */
-    public function updateInstituteBasicInfo(Request $request, $id) // id is instituteId
-    {
-      echo Auth::user()->id;
-        if(InstituteBL::hasPermissionToUpdate($id)){
-          $instituteInfo = InstituteBL::instituteAssignDefaultValue($request->all());
-          //$instituteModel = new Institute(UserCommon::getLoogedInUserId());
-          return $this->instituteModel->updateInstituteBasicInfo($instituteInfo,$id);
-       }
-       return "Permission Dennied ";
-    }
-    /**  API : Get the details of city based on StateID 
-    *           if stateId is 0 then return all citys
-    */
-    public function updateInstituteAddress(Request $request, $id) // id is instituteId
-    {
-       if(InstituteBL::hasPermissionToUpdate($id)){
-          $instituteInfo = InstituteBL::instituteAssignDefaultValue($request->all());
-          //$instituteModel = new Institute(UserCommon::getLoogedInUserId());
-          return $this->instituteModel->updateInstituteAddress($instituteInfo,$id);
-       }
-       return "Permission Dennied ";
-    }
+    // public function postUserType(Request $request) // id is instituteId
+    // {
+    //   if($this->userType == UserBL::USER_TYPE['SuperAdmin']){
+          
+    //    }
+    //    return "Permission Dennied ";
+    // }
+    // college
+    // college_Type
+    // education_degree
+    // education_department
+    // education_level
+    // teacher_title
 }

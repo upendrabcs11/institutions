@@ -1,7 +1,6 @@
 
 DROP TABLE IF EXISTS `institute_types`; 
-
-CREATE  TABLE `institute_types` (
+CREATE  TABLE `institute_types`(
   `id` TINYINT NOT NULL  ,
   `name` VARCHAR(45) NOT NULL ,
   `description` VARCHAR(100),

@@ -4,6 +4,7 @@ CREATE  TABLE `teacher_titles` (
   `id` SMALLINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL ,
   `full_name` VARCHAR(45) ,
+  `priority` SMALLINT DEFAULT 0,
   `description` VARCHAR(500),
   `status_id` SMALLINT NOT NULL DEFAULT 0,
   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,

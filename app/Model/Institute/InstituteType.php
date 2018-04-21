@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Model\Common;
+namespace App\Model\Institute;
 use DB;
 
-class InstituteCommonType 
+class InstituteType 
 {
     /**
      * Show the application dashboard.
@@ -11,8 +11,7 @@ class InstituteCommonType
      * @return \Illuminate\Http\Response
      */
     public function  getInstituteType()
-    {
-        
+    {        
         $institute_type = DB::table('institute_types')
                 ->select('id as InstituteTypeId','name as InstituteTypeName','description as Description')
                 ->where('status_id','=','0')->get();
