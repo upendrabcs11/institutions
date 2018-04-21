@@ -4,8 +4,9 @@ DROP TABLE IF EXISTS `citis` ;
 CREATE  TABLE `cities` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
+  `priority` SMALLINT DEFAULT 0,
   `state_id` INT ,
-  `status_id` TINYINT NOT NULL DEFAULT '0',
+  `status_id` SMALLINT NOT NULL DEFAULT '0',
   `base_url` VARCHAR(45) ,
   `image_url` VARCHAR(45) ,
   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,

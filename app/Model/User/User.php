@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Common;
+namespace App\Model\User;
 use DB;
 
 class User 

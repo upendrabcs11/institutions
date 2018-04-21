@@ -5,7 +5,7 @@ CREATE  TABLE `institute_offices` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(100) NOT NULL ,
   `institute_id` INT ,
-  `admin_id` INT,
+  `office_admin_id` INT,
   `status_id` TINYINT NOT NULL,
   `state_id` TINYINT NOT NULL,
   `state_name` VARCHAR(100),

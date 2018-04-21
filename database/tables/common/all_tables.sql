@@ -8,8 +8,11 @@ SET SESSION SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
   DROP TABLE IF EXISTS `subjects`; 
   DROP TABLE IF EXISTS `class_batch_routines`; 
   DROP TABLE IF EXISTS `class_batchs`; 
+  DROP TABLE IF EXISTS `classes_batchs_shedule`;
+  DROP TABLE IF EXISTS `classes_batch_type`; 
   DROP TABLE IF EXISTS `courses`; 
   DROP TABLE IF EXISTS `education_stage`; 
+  DROP TABLE IF EXISTS `examination_types`;
   
 
   
@@ -85,6 +88,7 @@ INSERT INTO institute_types(`id`,`name`,`description`)
 CREATE  TABLE `user_types` (
   `id` SMALLINT NOT NULL  ,
   `name` VARCHAR(45) NOT NULL ,
+  `priority` SMALLINT DEFAULT 0,
   `status_id` SMALLINT NOT NULL DEFAULT 0,
   `description` VARCHAR(500),
   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -118,8 +122,9 @@ INSERT INTO course_types(`id`,`name`,`description`)
        VALUES ('0','Not Specified','not specification');
 
 
+DROP TABLE IF EXISTS `course_groups`; 
 CREATE  TABLE `course_groups` (
-  `id` SMALLINT NOT NULL  ,
+  `id` SMALLINT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
   `description` VARCHAR(500),
   `status_id` SMALLINT NOT NULL DEFAULT 0,
@@ -135,9 +140,11 @@ INSERT INTO course_groups(`id`,`name`,`description`)
        VALUES ('0','Not Specified','not specification');
 
 
+DROP TABLE IF EXISTS `course_levels`; -- 11th and 12th eng. and medical , 11th 12th eng . and med. and so on
 CREATE  TABLE `course_levels` (
-  `id` SMALLINT NOT NULL  ,
+  `id` SMALLINT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
+  `education_stage_id` SMALLINT,
   `description` VARCHAR(500),
   `status_id` SMALLINT NOT NULL DEFAULT 0,
   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -148,8 +155,12 @@ CREATE  TABLE `course_levels` (
    );
 
 
-INSERT INTO course_levels(`id`,`name`,`description`)
-       VALUES ('0','Not Specified','not specification');
+INSERT INTO course_levels(`id`,`name`,`description`,`status_id`)
+       VALUES ('0','Not Specified','degree level is not defined or unknown',0),
+            ('1', '11th and 12th', '11th and 12th ', 1),
+            ('2', '11th, 12th and Med.', 'education from 6th to 8th', 1),
+            ('3', '11th, 12th and Engg.', 'education 9th to 10th', 1),
+            ('4', '11th, 12th, Med. and Engg', '11th And 12th', 1);
 
 
 CREATE  TABLE `college_types` (
@@ -174,6 +185,7 @@ CREATE  TABLE `teacher_titles` (
   `id` SMALLINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL ,
   `full_name` VARCHAR(45) ,
+  `priority` SMALLINT DEFAULT 0,
   `description` VARCHAR(500),
   `status_id` SMALLINT NOT NULL DEFAULT 0,
   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -355,6 +367,7 @@ INSERT INTO state_types(`id`,`name`,`status_id`)
  CREATE  TABLE `states` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
+  `priority` SMALLINT DEFAULT 0,
   `status_id` SMALLINT NOT NULL DEFAULT '0',
   `state_type_id` SMALLINT NOT NULL,
   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -367,6 +380,7 @@ INSERT INTO state_types(`id`,`name`,`status_id`)
  CREATE  TABLE `cities` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
+  `priority` SMALLINT DEFAULT 0,
   `state_id` INT ,
   `status_id` SMALLINT NOT NULL DEFAULT '0',
   `base_url` VARCHAR(45) ,
@@ -381,6 +395,7 @@ INSERT INTO state_types(`id`,`name`,`status_id`)
  CREATE  TABLE `city_areas` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
+  `priority` SMALLINT DEFAULT 0,
   `city_id` INT NOT NULL,
   `pin_code` VARCHAR(6)  DEFAULT '',
   `status_id` SMALLINT NOT NULL DEFAULT '0',
@@ -467,15 +482,43 @@ CREATE  TABLE `subjects` (
   `name` VARCHAR(100) NOT NULL ,
   `sort_name` VARCHAR(100) , 
   `full_name` VARCHAR(100),
-  `course_id` SMALLINT,
+  `course_level_id` INT, -- 11th and 12th eng. and medical , 11th 12th eng . and med. and so on 
+  `priority` SMALLINT DEFAULT 0,
   `status_id` SMALLINT NOT NULL DEFAULT 0,
   `description` VARCHAR(500),
   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` INT ,
    CONSTRAINT PK_subjects PRIMARY KEY (id),
-   CONSTRAINT FK_subjects_status FOREIGN KEY (`status_id`) REFERENCES status(`id`)
-   );
+   CONSTRAINT FK_subjects_status FOREIGN KEY (`status_id`) REFERENCES status(`id`),
+   CONSTRAINT UK_subjects_name_course_level_id UNIQUE(course_level_id, name)
+  );
+
+
+ 
+DROP TABLE IF EXISTS `examination_types`; 
+CREATE  TABLE `examination_types` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(100) NOT NULL ,
+  `sort_name` VARCHAR(100) , 
+  `full_name` VARCHAR(100),
+  `course_level_id` INT, -- 11th and 12th eng. and medical , 11th 12th eng . and med. and so on 
+  `status_id` SMALLINT NOT NULL DEFAULT 0,
+  `description` VARCHAR(500),
+  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` INT ,
+   CONSTRAINT PK_examination_types PRIMARY KEY (id),
+   CONSTRAINT FK_examination_types_status FOREIGN KEY (`status_id`) REFERENCES status(`id`),
+   CONSTRAINT UK_examination_types_name_course_level_id UNIQUE(course_level_id, name)
+  );
+
+INSERT INTO examination_types(`id`,`name`,`description`,`status_id`)
+       VALUES ('0','Not Specified','degree level is not defined or unknown',0),
+            ('1', '11th and 12th', '11th and 12th ', 1),
+            ('2', '11th, 12th and Med.', 'education from 6th to 8th', 1),
+            ('3', '11th, 12th and Engg.', 'education 9th to 10th', 1),
+            ('4', '11th, 12th, Med. and Engg', '11th And 12th', 1);
 
 
 CREATE  TABLE `courses` (
@@ -483,9 +526,10 @@ CREATE  TABLE `courses` (
   `name` VARCHAR(100) NOT NULL ,
   `sort_name` VARCHAR(100) , 
   `full_name` VARCHAR(100),
-  `course_type_id` SMALLINT ,
-  `course_group_id` SMALLINT,
-  `course_level_id` SMALLINT,
+  `course_type_id` SMALLINT , -- crash course , regular courses , advance courses 
+  `course_group_id` SMALLINT, -- 11th, 12th ,11th$12th , eng. ,eng. & med. 11th,
+  `course_level_id` SMALLINT, -- at what level cources is tought 10 12th iitjee 
+                              -- like (not much imp nut in some cases may be used)
   `status_id` SMALLINT NOT NULL,
   `description` VARCHAR(500),
   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -496,12 +540,18 @@ CREATE  TABLE `courses` (
    );
 
 
+DROP TABLE IF EXISTS `classes_batchs`; 
 CREATE  TABLE `class_batchs` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(100) NOT NULL ,
+  `max_capacity` INT,
+  `seat_available` INT,
+  `tution_fees` INT,
   `institute_id` INT NOT NULL , 
   `office_id` INT,
-  `course_id` SMALLINT ,
+  `course_level_id` SMALLINT , -- 11th and 12th eng. and medical , 11th 12th eng . and med. and so on 
+  `classes_batch_type_id` SMALLINT , -- crash course , advance batch, foundation ...
+  -- `class_batch_shedule_type_id` SMALLINT , -- Daily , Alternate , monthly, weekly 
   `batch_start_date` DATE ,  
   `batch_end_date` DATE ,
   `start_time` TIME,
@@ -511,26 +561,65 @@ CREATE  TABLE `class_batchs` (
   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` INT ,
+  `classes_batchs_rating` FLOAT,
    CONSTRAINT PK_class_batchs PRIMARY KEY (id),
    CONSTRAINT FK_class_batchs_status FOREIGN KEY (`status_id`) REFERENCES status(`id`)
    );
 
+ CREATE  TABLE `classes_batch_type` (
+  `id` SMALLINT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NOT NULL ,
+  `status_id` SMALLINT NOT NULL DEFAULT 0,
+  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` INT,
+   CONSTRAINT PK_classes_batch_type PRIMARY KEY (id),
+   CONSTRAINT FK_classes_batch_type FOREIGN KEY (`status_id`) REFERENCES status(`id`)
+   );
 
-CREATE  TABLE `class_batch_routines` (
+
+INSERT INTO classes_batch_type(`id`,`name`,`status_id`)
+       VALUES ('0','Others', 0),
+            ('1', 'Foundation Batch',  1),
+            ('2', 'Target Batch',  1),
+            ('3', 'Crash Course', 1);
+
+
+ -- what what day class will run
+CREATE  TABLE `classes_batchs_shedule` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `class_batch_id` VARCHAR(100) NOT NULL ,
-  `teacher_id` INT ,
-  `subject_id` INT,
+  `classes_batch_id` INT NOT NULL,
+  `classes_schedule_day_id` SMALLINT ,
   `start_time` TIME,
   `end_time` TIME,
-  `status_id` SMALLINT NOT NULL,
+  `status_id` SMALLINT NOT NULL DEFAULT 0,
   `description` VARCHAR(500),
+  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` INT ,
+   CONSTRAINT PK_classes_batchs_shedule PRIMARY KEY (id),
+   CONSTRAINT FK_classes_batchs_shedule_status FOREIGN KEY (`status_id`) REFERENCES status(`id`),
+   CONSTRAINT UK_classes_batchs_shedule_batch_id_day_id 
+                UNIQUE(classes_batch_id, classes_schedule_day_id)
+  );
+
+
+DROP TABLE IF EXISTS `class_batch_routines`; 
+CREATE  TABLE `class_batch_routines` (
+  `id` INT NOT NULL AUTO_INCREMENT ,  
+  `class_batch_id` INT NOT NULL ,
+  `teacher_id` INT ,
+  `subject_id` INT,
+  `classes_batchs_shedule_id` INT,
+  `start_time` TIME,
+  `end_time` TIME,
+  `status_id` SMALLINT NOT NULL DEFAULT 0,
   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` INT ,
    CONSTRAINT PK_class_batch_routines PRIMARY KEY (id),
    CONSTRAINT FK_class_batch_routines_status FOREIGN KEY (`status_id`) REFERENCES status(`id`)
-   );
+  );
 
 
 CREATE  TABLE `user_educations` (
@@ -593,7 +682,27 @@ CREATE  TABLE `colleges` (
 
 
 
+-- mapping table
+ DROP TABLE IF EXISTS `class_batch_to_examination_type`; 
+CREATE  TABLE `class_batch_to_examination_type` (
+  `class_batch_id` INT NOT NULL ,
+  `examination_type_id` INT NOT NULL ,
+  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` INT ,
+   CONSTRAINT PK_class_batch_to_examination_type PRIMARY KEY (class_batch_id, examination_type_id)
+  );
 
+
+DROP TABLE IF EXISTS `class_batch_to_subjects`; 
+CREATE  TABLE `class_batch_to_subjects` (
+  `class_batch_id` INT NOT NULL ,
+  `subject_id` INT NOT NULL ,
+  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` INT ,
+   CONSTRAINT PK_class_batch_to_subjects PRIMARY KEY (class_batch_id, subject_id)
+  );
 
 
 

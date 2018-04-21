@@ -31,6 +31,11 @@ Route::group(['namespace' => 'API'], function () {
 	    Route::get('/city/{id?}', 'LocationController@getCityById');
 	    Route::get('/area/{id?}', 'LocationController@getAreaById');
 	});
+	Route::group(['namespace' => 'User'], function () {
+	    Route::get('/user/user-type', 'CommonController@getUserType');
+	    Route::get('/user/education-degree', 'CommonController@getEducationDegree');
+	    Route::get('/college/college-type', 'CommonController@getCollegeType');
+	});
 
 	
 });
