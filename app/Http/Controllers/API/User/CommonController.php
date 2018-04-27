@@ -10,7 +10,9 @@ use App\BusinessLogic\User\UserBL ;
 use App\Model\User\UserType;
 use App\Model\College\College;
 use App\Model\User\EducationDegree;
-
+use App\Model\User\EducationDepartment;
+use App\Model\User\EducationStage;
+use App\Model\User\TeacherTitle;
 
 class CommonController extends Controller
 {
@@ -21,7 +23,7 @@ class CommonController extends Controller
      */
     public function __construct()
     {
-        // $this->userTypeModel = new UserType();
+        
     }
     /**  API : Update status of institute  
     */
@@ -41,6 +43,14 @@ class CommonController extends Controller
     /**
      * 
      */
+    public function getCollege(Request $request)
+    {  
+       $collegeModel = new College();
+       return $collegeModel->getCollege();
+    }
+    /**
+     * 
+     */
     public function getEducationDegree(Request $request)
     {  
        $educationDegreeModel = new EducationDegree();
@@ -51,20 +61,25 @@ class CommonController extends Controller
      */
     public function getEducationDepartment(Request $request)
     {  
-       $educationDepartmentModel = new EducationDegree();
+       $educationDepartmentModel = new EducationDepartment();
        return $educationDepartmentModel->getEducationDepartment();
+    }    
+     /**
+     * 
+     */
+    public function getEducationStage(Request $request)
+    {  
+       $educationStageModel = new EducationStage();
+       return $educationStageModel->getEducationStage();
     }
-    
-    /**  API : Get the details of city based on StateID 
-    *           if stateId is 0 then return all citys
-    */
-    // public function postUserType(Request $request) // id is instituteId
-    // {
-    //   if($this->userType == UserBL::USER_TYPE['SuperAdmin']){
-          
-    //    }
-    //    return "Permission Dennied ";
-    // }
+    /**
+     * 
+     */
+    public function getTeacherTitle(Request $request)
+    {  
+       $teacherTitleModel = new TeacherTitle();
+       return $teacherTitleModel->getTeacherTitle();
+    }
     // college
     // college_Type
     // education_degree
