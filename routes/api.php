@@ -34,7 +34,11 @@ Route::group(['namespace' => 'API'], function () {
 	Route::group(['namespace' => 'User'], function () {
 	    Route::get('/user/user-type', 'CommonController@getUserType');
 	    Route::get('/user/education-degree', 'CommonController@getEducationDegree');
-	    Route::get('/college/college-type', 'CommonController@getCollegeType');
+	    Route::get('/user/education-department', 'CommonController@getEducationDepartment');
+	    Route::get('/user/education-stage', 'CommonController@getEducationStage');
+	    Route::get('/user/teacher-title', 'CommonController@getTeacherTitle');
+	    Route::get('/college-type', 'CommonController@getCollegeType');
+	    Route::get('/college', 'CommonController@getCollege');
 	});
 
 	

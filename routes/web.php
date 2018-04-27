@@ -29,14 +29,18 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
 });
 
 Route::prefix('institute')->group(function () {
-	Route::put('/basic-info/{id?}',   'Institute\InstituteController@updateBasicInfo');	
+	Route::put('/basic-info/{id?}', 'Institute\InstituteController@updateBasicInfo');	
 	Route::put('/address/{id?}', 'Institute\InstituteController@updateAddress');	
     
 });
 // teacher url
 Route::prefix('user')->group(function () {
    Route::group(['namespace' => 'User'], function () {
-	Route::match(['get', 'post'],'/register', 'UserController@register');	
+	Route::match(['get', 'post'],'/register', 'UserController@register');
+	Route::match(['get', 'post'],'/user-education', 'UserEducationController@index');
+	Route::match(['put','delete'],'/user-education/{$id}', 'UserEducationController@userEducation');
+	Route::match(['get', 'post'],'/user-experience', 'UserExperienceController@index');
+	Route::match(['put','delete'],'/user-experience/{$id}', 'UserExperienceController@userExperience');
   }); 
 });
 Route::get('/home', 'HomeController@index');

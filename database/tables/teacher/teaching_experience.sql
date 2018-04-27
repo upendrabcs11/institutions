@@ -4,8 +4,8 @@ DROP TABLE IF EXISTS `teaching_experiences`;
 CREATE  TABLE `teaching_experiences` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `user_id` VARCHAR(100)  NOT NULL,
-  `title_id` SMALLINT , -- others in case of others custom name
-  `title_name` VARCHAR(100) , 
+  `user_role_id` SMALLINT , -- others in case of others custom name
+  `user_role_name` VARCHAR(100) , 
   `institute_id` SMALLINT , -- others in case of others custom ins name
   `institute_name` VARCHAR(100) ,   
   `start_date` DATE ,  

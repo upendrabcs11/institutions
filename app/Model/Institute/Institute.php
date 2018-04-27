@@ -80,15 +80,6 @@ class Institute
     /**
      * update institute type by user / super admin
      */
-    public function updateInstituteStatus($insInfo,$instituteId)
-    {
-        $institute = DB::select('call  institute_type_update(?,?,?,?)', 
-                      array($instituteId, $insInfo['Status'], $insInfo['TypeId'], $this->curUserId));
-        return $institute ;
-    }
-    /**
-     * update institute type by user / super admin
-     */
     public function updateInstituteBasicInfo($insInfo,$instituteId)
     {
       $ins_array = [];
