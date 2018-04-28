@@ -30,7 +30,7 @@ class LocationBL
     { 
         $stateDetail['StateName'] = $state['StateName'];
         $stateDetail['StateType'] = $state['StateType'];
-        $stateDetail['UserId'] = UserCommon::getLoogedInUserId();
+        $stateDetail['UserId'] = UserCommon::getLoggedInUserId();
         return $stateDetail;
     }
     /** purpose : get states details
@@ -42,7 +42,7 @@ class LocationBL
         $cityDetail['StateId'] = $city['StateId'];
         $cityDetail['BaseUrl'] = isset($city['BaseUrl']) ? $city['BaseUrl'] : "";
         $cityDetail['ImgUrl'] =  isset($city['ImgUrl']) ? $city['ImgUrl'] : "";
-        $cityDetail['UserId'] = UserCommon::getLoogedInUserId();
+        $cityDetail['UserId'] = UserCommon::getLoggedInUserId();
         return $cityDetail;
     }
     /** purpose : get citys details
@@ -53,7 +53,7 @@ class LocationBL
         $areaDetail['AreaName'] =  $area['AreaName'];
         $areaDetail['CityId'] = $area['CityId'];
         $areaDetail['PinCode'] = isset($area['PinCode']) ? $area['PinCode'] : null;
-        $areaDetail['UserId'] = UserCommon::getLoogedInUserId();
+        $areaDetail['UserId'] = UserCommon::getLoggedInUserId();
         return $areaDetail;
     }
     
