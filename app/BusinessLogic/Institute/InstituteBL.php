@@ -39,7 +39,7 @@ class InstituteBL
         // at time of insertation
         $institute['Status'] =isset($insInfo['Status'])? $insInfo['Status'] : null ; 
         $institute['TypeId'] = isset($insInfo['InstituteTypeId'])? $insInfo['InstituteTypeId'] : null ;
-        $institute['UserId'] = UserCommon::getLoogedInUserId();
+        $institute['UserId'] = UserCommon::getLoggedInUserId();
         return $institute ;
 
     }
@@ -103,12 +103,12 @@ class InstituteBL
          *  method to check user is instituteadmin or super admin 
          */ 
     public static function hasPermissionToUpdate($institute_id){
-        if(UserCommon::isLoogedInUserSuperAdmin()){
+        if(UserCommon::isLoggedInUserSuperAdmin()){
            return true; 
          }
             
 
-        $user_id = UserCommon::getLoogedInUserId();
+        $user_id = UserCommon::getLoggedInUserId();
         if($user_id == 0)
             return false;
         $instituteModel = new Institute();
