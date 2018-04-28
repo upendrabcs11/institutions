@@ -52,6 +52,6 @@ class UserExperienceController extends Controller
         $userExperience = UserExperienceBL::updateUserExperienceKeyMapping($requestArray) ; 
         $userExperience['StatusId'] = 1 ;
         $userExperienceResp = $this->userExperienceModel->addUserExperience($userExperience,
-                                 UserCommon::getLoogedInUserId());
+                                 UserCommon::getLoggedInUserId());
    }
  }

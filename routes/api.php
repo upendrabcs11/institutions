@@ -26,7 +26,6 @@ Route::group(['namespace' => 'API'], function () {
 	    Route::match(['get', 'post'],'/state', 'LocationController@state');
 	    Route::match(['get', 'post'],'/city', 'LocationController@city');
 	    Route::match(['get', 'post'],'/area', 'LocationController@area');
-
 	    Route::get('/state/{id?}', 'LocationController@getStateById');
 	    Route::get('/city/{id?}', 'LocationController@getCityById');
 	    Route::get('/area/{id?}', 'LocationController@getAreaById');

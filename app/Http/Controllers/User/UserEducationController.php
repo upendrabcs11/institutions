@@ -52,8 +52,8 @@ class UserEducationController extends Controller
           }
         $userEducation = UserEducationBL::updateUserEducationKeyMapping($requestArray) ; 
         $userEducation['StatusId'] = 1 ;
-        $userEducationResp = $this->userEducationModel->addUserEducation($userEducation,
-                                 UserCommon::getLoggedInUserId());
+        $userEducationResp = $this->userEducationModel
+                    ->addUserEducation($userEducation, UserCommon::getLoggedInUserId());
         
         return $userEducationResp;
    }

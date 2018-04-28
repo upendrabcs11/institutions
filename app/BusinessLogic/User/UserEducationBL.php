@@ -31,8 +31,7 @@ class UserEducationBL
         $usr_education['StatusId'] = isset($userEducation['StatusId'])? 
                                             $userEducation['StatusId'] : null ; 
         
-        return $usr_education ;
-        
+        return $usr_education ;        
       // $userEducation_array['updated_by'] = $userEducation['UpdatedBy'] ;
     }
     /**
