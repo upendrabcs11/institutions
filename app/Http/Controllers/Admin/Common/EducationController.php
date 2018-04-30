@@ -9,15 +9,13 @@ use App\Model\Institute\Institute ;
 use App\BusinessLogic\User\UserBL ;
 
 
-class UserDashboardController extends Controller
+class EducationController extends Controller
 {
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    protected $instituteModel ;
-    protected $routePath = ['0' => 'dashboard.institute','1' => 'institute_dashboard'];
     public function __construct()
     {
         $this->instituteModel = new Institute();
