@@ -9,20 +9,18 @@ use App\Model\Institute\Institute ;
 use App\BusinessLogic\User\UserBL ;
 
 
-class UserDashboardController extends Controller
+class EducationController extends Controller
 {
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    protected $instituteModel ;
-    protected $routePath = ['0' => 'dashboard.institute','1' => 'institute_dashboard'];
     public function __construct()
     {
         $this->instituteModel = new Institute();
         $this->middleware('auth');
-        $this->dashBoardType = UserCommon::getLoggedInUserType();
+        $this->dashBoardType = UserCommon::getLoogedInUserType();
     }
 
     /**
@@ -35,9 +33,9 @@ class UserDashboardController extends Controller
         return $this->getInstituteDashboard();
     }
     protected function getInstituteDashboard(){
-        $userType = UserCommon::getLoggedInUserType();
+        $userType = UserCommon::getLoogedInUserType();
         if($userType == UserBL::USER_TYPE['InstituteAdmin']){
-            $userId = UserCommon::getLoggedInUserId();
+            $userId = UserCommon::getLoogedInUserId();
             $instituteDetails = $this->instituteModel->getInstituteByUserId($userId);
             return view('dashboard.institute')->with(['institute'=> $instituteDetails[0]]);
         }

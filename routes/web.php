@@ -44,3 +44,25 @@ Route::prefix('user')->group(function () {
   }); 
 });
 Route::get('/home', 'HomeController@index');
+
+
+
+
+
+
+Route::prefix('admin')->group(function () {
+	//Route::group(['namespace' => 'Admin'], function () {
+
+	    Route::prefix('institute')->group(function () {
+		   Route::group(['namespace' => 'Institute'], function () {
+			 //Route::match(['post','put','delete'],'/education-degree', 'EducationDegreeController@index');	
+		  }); 
+		});
+		Route::prefix('teacher')->group(function () {
+		   Route::group(['namespace' => 'User'], function () {
+			 Route::match(['get','post','put','delete'],'/education-degree', 'EducationDegreeController@index');	
+		  }); 
+		});
+
+	//});
+});

@@ -27,12 +27,14 @@ class EducationDegree
      */
     public function  getEducationDegreeFullDetails()
     {        
-        $user_type = DB::table('user_types')
-                ->select('id as UserTypeId','name as UserTypeName','priority As Priority',
-                    'status_id AS StatusId', 'description as Description',
-                    'created_date','last_updated_date')
-                ->get();
-        return $user_type;
+       $education_degree = DB::table('education_degrees')
+                ->select('id as EducationDegreeId','name as EducationDegreeName',
+                    'full_name as FullName', 'short_name as ShortName', 'education_stage_id as EducationStageId', 
+                    'priority as Priority', 'status_id as StatusId', 'description as Description', 
+                     'created_date as CreatedDate', 'last_updated_date as UpdatedDate', 
+                     'updated_by as UpdatedBy')
+                //->where('edu_deg.status_id','=','0')
+                ->orderby('priority')->get();
+        return $education_degree;
     }
-    
 }
