@@ -42,6 +42,13 @@ table {
 width: 95vw;
 max-width: 95vw;
 }
+
+.table tr td .collapse{padding:10px 0}
+.table-striped > tbody > tr:nth-of-type(2n+2){background:#f1f1f1}
+
+.table-striped > tbody > tr.noborder td{border-top:none;}
+
+
 </style>
 
 
@@ -62,10 +69,10 @@ max-width: 95vw;
         </div>
        </div>
        <div class="panel-body">
-            <table class="table table-bordered table-striped table-hover tabledata">
+            <table class="table table-striped table-hover tabledata">
                   <thead>
                     <tr>
-                      <th> Id</th>
+                      <th> ID</th>
                       <th>Priority</th>
                       <th> Name</th>
                       <th> Full Name</th>
@@ -73,7 +80,7 @@ max-width: 95vw;
                       <th>Eductaion Stage Id</th>
                       
                       <th>Status</th>
-                      <th>Show More</th>
+                      <!-- <th>Show More</th> -->
 
                      <!--  <th>Description</th>
                       <th>Created Date</th>  
@@ -85,7 +92,7 @@ max-width: 95vw;
                   <tbody>
                     @foreach($degrees as $degree)
                       <tr>
-                          <td>{{$degree->EducationDegreeId}}</td>
+                          <td class="accordion-toggle" data-toggle="collapse" data-target="#collapse{{$degree->EducationDegreeId}}" nowrap="">{{$degree->EducationDegreeId}} &nbsp;<i class="fa fa-arrow-circle-o-down"></td>
                           <td><input type="number" class="form-control" value="{{$degree->Priority}}"></td>
                           <td><input type="text" class="form-control" value="{{$degree->EducationDegreeName}}"></td>
                           <td><input type="text" class="form-control" value="{{$degree->FullName}}"></td>
@@ -121,10 +128,42 @@ max-width: 95vw;
                           <td>{{$degree->CreatedDate}}</td>
                           <td>{{$degree->UpdatedDate}}</td>
                           <td>{{$degree->UpdatedBy}}</td> -->
-                          <td><button class="btn btn-default">More</button></td>
+                          <!-- <td><button class="btn btn-default">More</button></td> -->
                           <td><button type="button" class="btn btn-success updatebutton">Update</button></td>
                       </tr>
-                      <tr>
+                      <tr class="noborder">
+                        <td colspan="9" style="padding:0 10px">
+                          <div id="collapse{{$degree->EducationDegreeId}}" class="collapse">
+                            <div class="row form-group">
+                                <div class="col-md-4 form-inline">
+                                  <label>Name</label>
+                                  <input type="text" class="form-control">
+                                </div>
+                                <div class="col-md-4 form-inline">
+                                  <label>Name</label>
+                                  <select class="form-control">
+                                    <option>Select</option>
+                                  </select>
+                                </div>
+                                <div class="col-md-4 form-inline">
+                                  <label>Name</label>
+                                  <textarea class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                  <input type="checkbox" name=""> Check 1
+                                  <input type="checkbox" name=""> Check 2
+                                  <input type="checkbox" name=""> Check 3
+                                </div>
+                                <div class="col-md-4">
+                                  <input type="radio" name=""> Male
+                                  <input type="radio" name=""> Female
+                                </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
                      @endforeach
                     <!-- <tr>
                       <td> <input type="text" class="form-control" id="usr"></td>
@@ -143,6 +182,52 @@ max-width: 95vw;
                      'updated_by as UpdatedBy -->
                   </tbody>
           </table>
+
+
+     <!-- <table class="table table-bordered table-striped table-hover tabledata">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Priority</th>
+          <th>Name</th>
+          <th>Full Name</th>
+          <th>Short Name</th>
+          <th>Eductaion Stage Id</th>
+          <th>Status</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="accordion-toggle" data-toggle="collapse" data-target="#collapseOne">1 <i class="fa fa-angle-down"></td>
+          <td><input type="text" name="" class="form-control"></td>
+          <td><input type="text" name="" class="form-control"></td>
+          <td><input type="text" name="" class="form-control"></td>
+          <td><input type="text" name="" class="form-control"></td>
+          <td><input type="text" name="" class="form-control"></td>
+          <td><input type="text" name="" class="form-control"></td>
+          <td><button type="button" class="btn btn-success updatebutton">Update</button></td>
+        </tr>
+        <tr>
+          <td colspan="8" style="padding: 0">
+            <div id="collapseOne" class="collapse in">
+              <div class="row">
+                  <div class="col-md-6 form-inline">
+                    <label>Name</label>
+                    <input type="text" class="form-control">
+                  </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+      </tbody>
+    </table> -->
        
 
 
@@ -178,6 +263,11 @@ max-width: 95vw;
 
             alert("nbnb");
 
+       })
+
+       $(".accordion-toggle").on("click", function(){
+          $(this).find('.fa').toggleClass('fa-arrow-circle-o-down');
+          $(this).find('.fa').toggleClass('fa-arrow-circle-o-up');
        })
       
 

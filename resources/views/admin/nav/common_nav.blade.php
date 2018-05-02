@@ -29,3 +29,7 @@
     
 </nav>
 </div>
+
+<style>
+  .sidebar .menu-item ul{display:none;}
+</style>
