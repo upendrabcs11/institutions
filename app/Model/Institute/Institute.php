@@ -144,4 +144,20 @@ class Institute
 
       return $this->getInstituteByInstituteId($instituteId);
     }
+    /**
+     * get institute details
+     */
+    public function getInstitutesBySearchName($searchedName)
+    {
+       $nameLike = "%{$searchedName}%" ;
+        $institutes = DB::table('institutes as ins')
+            ->join('cities as ct', 'ct.id', '=', 'ins.city_id')
+            ->where('ins.name','like',$nameLike)
+            ->orwhere('ins.full_name','like',$nameLike)
+            ->select('ins.id as InstituteId', 'ins.name as InstituteName', 
+              'ct.name as CityName')
+            ->get();
+        
+        return $institutes;
+    }
 }

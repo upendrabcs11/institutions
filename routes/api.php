@@ -40,6 +40,24 @@ Route::group(['namespace' => 'API'], function () {
 	    Route::get('/college', 'CommonController@getCollege');
 	});
 
+	Route::group(['namespace' => 'Institute'], function () {
+	  Route::prefix('institute')->group(function () {
+	    Route::get('/', 'CommonController@getInstitutes');
+	    Route::get('/institute-type', 'CommonController@getInstituteType');
+	    Route::get('/subject', 'CommonController@getSubjects');
+
+	    Route::get('/course', 'CommonController@getCourses');
+	    Route::get('/course-type', 'CommonController@getCourseType');
+	    Route::get('/course-level', 'CommonController@getCourseLevel');
+	    Route::get('/course-group', 'CommonController@getCourseGroup');
+	    
+
+	    Route::get('/examination-type', 'CommonController@getExaminationType');
+	    Route::get('/class-batch-type', 'CommonController@getClassBatchType');
+	    Route::get('/class-schedule-days', 'CommonController@getClassScheduleDays');
+	  });
+	});
+
 	
 });
 
