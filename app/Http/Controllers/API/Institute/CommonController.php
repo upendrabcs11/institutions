@@ -4,6 +4,17 @@ namespace App\Http\Controllers\API\Institute;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Model\Institute\InstituteType;
+use App\Model\Institute\Institute;
+use App\Model\Institute\Subject;
+use App\Model\Institute\Course;
+use App\Model\Institute\CourseType;
+use App\Model\Institute\CourseLevel;
+use App\Model\Institute\CourseGroup;
+use App\Model\Institute\ExaminationType;
+use App\Model\Institute\ClassBatchType;
+use App\Model\Institute\ClassScheduleDay;
+
 class CommonController extends Controller
 {
     /**
@@ -13,46 +24,99 @@ class CommonController extends Controller
      */
     public function __construct()
     {
-        //$this->instituteModel = new Institute(UserCommon::getLoogedInUserId());
+        
     }
-     public function state(Request $request)
-    {
-        if($request->isMethod('get')){
-            $stateId = $request->StateId ;
-            return $this->locationModel->getState($stateId);
-        }
-        else{ // method == POST
-            return $this->postState($request);
-        }
+    /**  API : Update status of institute  
+    */
+    public function getInstituteType(Request $request)
+    {  
+       $instituteTypeModel = new InstituteType();
+       return $instituteTypeModel->getInstituteType();
     }
-    /** API : Get the details of state if stateId is 0 then return details of all state 
-     *         else return single id state information 
+    /**
+     * 
      */
-
-    public function city(Request $request) //function state(Request $request) 
-    {
-        if($request->isMethod('get')){
-            $stateId = $request->StateId ; 
-            //echo $stateId;           
-            return $this->locationModel->getCityByStateId($stateId);
-        }
-        else{ // method == POST
-            return $this->postCity($request);
-        }
+    public function getInstitutes(Request $request)
+    {  
+       $searchStr = $request->SearchUsing;
+       $instituteModel = new Institute();
+       return $instituteModel->getInstitutesBySearchName($searchStr);
     }
-    /** API : Get the Details  of Area based on cityId 
-     *         if cityId is 0 or some other value for which area is not available then 405 content not found is return 
+    /**
+     * 
      */
-
-    public function area(Request $request)
-    {
-        if($request->isMethod('get')){
-            $cityId = $request->CityId ;
-            return $this->locationModel->getAreaByCityId($cityId);
-        }
-        else{ // method == POST
-            return $this->postArea($request);
-        }
+    public function getSubjects(Request $request)
+    {  
+       $courseLevelId = $request->CourseLevelId;
+       $subjectModel = new Subject();
+       return $subjectModel->getSubjects($courseLevelId);
     }
+    /**
+     * 
+     */
+    public function getCourses(Request $request)
+    {  
+       $courseModel = new Course();
+       return $courseModel->getCourses();
+    }
+    /**
+     * 
+     */
+    public function getCourseType(Request $request)
+    {  
+       $courseTypeModel = new CourseType();
+       return $courseTypeModel->getCourseType();
+    }   
+     /**
+     * 
+     */
+    public function getCourseLevel(Request $request)
+    {  
+       $courseLevelModel = new CourseLevel();
+       return $courseLevelModel->getCourseLevel();
+    }
+    /**
+     * 
+     */
+    public function getCourseGroup(Request $request)
+    {  
+       $courseGroupModel = new CourseGroup();
+       return $courseGroupModel->getCourseGroup();
+    }
+     /**
+     * 
+     */
+    public function getExaminationType(Request $request)
+    {  
+       $examinationTypeModel = new ExaminationType();
+       return $examinationTypeModel->getExaminationType();
+    }   
+     /**
+     * 
+     */
+    public function getClassBatchType(Request $request)
+    {  
+       $classBatchTypeModel = new ClassBatchType();
+       return $classBatchTypeModel->getClassBatchType();
+    }
+    /**
+     * 
+     */
+    public function getClassScheduleDays(Request $request)
+    {  
+       $classScheduleDayModel = new ClassScheduleDay();
+       return $classScheduleDayModel->getClassScheduleDays();
+    }
+    // subjects
+    // institute_types
+    // institutes
 
+    // courses
+    // course_types
+    //course_levels
+    //course_groups
+
+    // examination_types
+    //classes_batch_type
+    //classes_schedule_day
 }

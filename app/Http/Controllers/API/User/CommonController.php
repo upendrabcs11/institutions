@@ -4,11 +4,9 @@ namespace App\Http\Controllers\API\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Common\UserCommon ;
-use App\BusinessLogic\User\UserBL ;
-
 use App\Model\User\UserType;
 use App\Model\College\College;
+use App\Model\College\CollegeType;
 use App\Model\User\EducationDegree;
 use App\Model\User\EducationDepartment;
 use App\Model\User\EducationStage;
@@ -37,16 +35,17 @@ class CommonController extends Controller
      */
     public function getCollegeType(Request $request)
     {  
-       $collegeModel = new College();
-       return $collegeModel->getCollegeType();
+       $collegeTypeModel = new CollegeType();
+       return $collegeTypeModel->getCollegeType();
     }
     /**
      * 
      */
     public function getCollege(Request $request)
     {  
+       $searchStr = $request->SearchUsing;
        $collegeModel = new College();
-       return $collegeModel->getCollege();
+       return $collegeModel->getCollege($searchStr);
     }
     /**
      * 
