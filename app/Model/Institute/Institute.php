@@ -80,15 +80,6 @@ class Institute
     /**
      * update institute type by user / super admin
      */
-    public function updateInstituteStatus($insInfo,$instituteId)
-    {
-        $institute = DB::select('call  institute_type_update(?,?,?,?)', 
-                      array($instituteId, $insInfo['Status'], $insInfo['TypeId'], $this->curUserId));
-        return $institute ;
-    }
-    /**
-     * update institute type by user / super admin
-     */
     public function updateInstituteBasicInfo($insInfo,$instituteId)
     {
       $ins_array = [];
@@ -152,5 +143,21 @@ class Institute
             ->update($ins_array);
 
       return $this->getInstituteByInstituteId($instituteId);
+    }
+    /**
+     * get institute details
+     */
+    public function getInstitutesBySearchName($searchedName)
+    {
+       $nameLike = "%{$searchedName}%" ;
+        $institutes = DB::table('institutes as ins')
+            ->join('cities as ct', 'ct.id', '=', 'ins.city_id')
+            ->where('ins.name','like',$nameLike)
+            ->orwhere('ins.full_name','like',$nameLike)
+            ->select('ins.id as InstituteId', 'ins.name as InstituteName', 
+              'ct.name as CityName')
+            ->get();
+        
+        return $institutes;
     }
 }

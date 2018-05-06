@@ -13,8 +13,8 @@ CREATE  TABLE `user_educations` (
   `education_stage_id` INT , -- 10th intermediate graduation post graduation
   `grade` VARCHAR(10) ,
   `activities` VARCHAR(700) ,
-  `start_data` DATE ,  
-  `end_data` DATE ,
+  `start_date` DATE ,  
+  `end_date` DATE ,
   `status_id` SMALLINT NOT NULL DEFAULT 0,
   `document_url` VARCHAR(100), 
   `link_url` VARCHAR(100), 

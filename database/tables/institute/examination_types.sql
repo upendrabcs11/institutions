@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `examination_types`;
 CREATE  TABLE `examination_types` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(100) NOT NULL ,
-  `sort_name` VARCHAR(100) , 
+  `short_name` VARCHAR(100) , 
   `full_name` VARCHAR(100),
   `course_level_id` INT, -- 11th and 12th eng. and medical , 11th 12th eng . and med. and so on 
   `status_id` SMALLINT NOT NULL DEFAULT 0,

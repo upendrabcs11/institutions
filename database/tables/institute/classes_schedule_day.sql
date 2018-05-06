@@ -18,4 +18,4 @@ INSERT INTO classes_schedule_day(`id`,`name`,`status_id`)
        VALUES ('0','Others', 0),
             ('1', 'MON',  1),
             ('2', 'TUE',  1),
-            ('3', 'WED' 1);
+            ('3', 'WED', 1);

@@ -312,11 +312,12 @@ INSERT INTO education_departments(`id`,`name`,`education_degree_id`,`status_id`)
           ('4', 'Civil Engineering', 3, 1),
           ('5', 'Electronics Engineering', 3, 1);
 
+
 CREATE  TABLE `teaching_experiences` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `user_id` VARCHAR(100)  NOT NULL,
-  `title_id` SMALLINT , -- others in case of others custom name
-  `title_name` VARCHAR(100) , 
+  `user_role_id` SMALLINT , -- others in case of others custom name
+  `user_role_name` VARCHAR(100) , 
   `institute_id` SMALLINT , -- others in case of others custom ins name
   `institute_name` VARCHAR(100) ,   
   `start_date` DATE ,  

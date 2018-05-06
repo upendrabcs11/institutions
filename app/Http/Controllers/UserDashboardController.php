@@ -22,7 +22,7 @@ class UserDashboardController extends Controller
     {
         $this->instituteModel = new Institute();
         $this->middleware('auth');
-        $this->dashBoardType = UserCommon::getLoogedInUserType();
+        $this->dashBoardType = UserCommon::getLoggedInUserType();
     }
 
     /**
@@ -35,9 +35,9 @@ class UserDashboardController extends Controller
         return $this->getInstituteDashboard();
     }
     protected function getInstituteDashboard(){
-        $userType = UserCommon::getLoogedInUserType();
+        $userType = UserCommon::getLoggedInUserType();
         if($userType == UserBL::USER_TYPE['InstituteAdmin']){
-            $userId = UserCommon::getLoogedInUserId();
+            $userId = UserCommon::getLoggedInUserId();
             $instituteDetails = $this->instituteModel->getInstituteByUserId($userId);
             return view('dashboard.institute')->with(['institute'=> $instituteDetails[0]]);
         }

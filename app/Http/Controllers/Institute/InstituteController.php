@@ -27,7 +27,7 @@ class InstituteController extends Controller
     public function __construct()
     {
         $this->userModel = new User();
-        $this->instituteModel = new Institute(UserCommon::getLoogedInUserId());
+        $this->instituteModel = new Institute(UserCommon::getLoggedInUserId());
         $this->common = new InstituteType();
      
     }
@@ -75,7 +75,7 @@ class InstituteController extends Controller
      */
    public function getBasicInfoEditPage()
     {
-        $userId = UserCommon::getLoogedInUserId();
+        $userId = UserCommon::getLoggedInUserId();
         $instituteDetails = $this->instituteModel->getInstituteByUserId($userId);
         $institute_type = $this->common->getInstituteType();
         //echo $institute_type;
@@ -88,7 +88,7 @@ class InstituteController extends Controller
      */
    public function getAddressEditPage()
     {
-        $userId = UserCommon::getLoogedInUserId();
+        $userId = UserCommon::getLoggedInUserId();
         $instituteDetails = $this->instituteModel->getInstituteByUserId($userId);
         //echo $institute_type;
         return view('dashboard_partial.institute_address_edit')

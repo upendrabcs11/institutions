@@ -44,7 +44,7 @@ class EducationDegreeController extends Controller
         //     //return $this->postState($request);
         // }
 
-          if($request->isMethod('put')){
+         else if($request->isMethod('put')){
 
 
 
