@@ -60,9 +60,9 @@ Route::prefix('admin')->group(function () {
 		});
 		Route::prefix('teacher')->group(function () {
 		   Route::group(['namespace' => 'User'], function () {
-			 Route::match(['get','post','put','delete'],'/education-degree', 'EducationDegreeController@index');	
+			 Route::match(['get','post','put','delete'],'/education-degree/{id?}', 'EducationDegreeController@index');
+			 Route::match(['get','post','put','delete'],'/college-type/{id?}', 'CollegeTypeController@index');
 		  }); 
 		});
-
 	//});
 });
