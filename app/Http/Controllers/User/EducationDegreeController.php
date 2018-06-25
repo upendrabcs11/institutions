@@ -2,19 +2,18 @@
 namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request ;
-use Illuminate\Support\Facades\Validator ;
-use Illuminate\Support\Facades\Auth ;
-use Illuminate\Foundation\Auth\AuthenticatesUsers ;
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Controller ;
 
+use App\Common\UserCommon ;
 use App\Model\User\EducationDegree ;
 use App\Model\User\EducationStage ;
 use App\Model\Common\Status ;
+use App\BusinessLogic\User\EducationDegreeBL;
 
 
 class EducationDegreeController extends Controller
 {
-    use AuthenticatesUsers;
     /**
      * Instantiate a new  instance.
      *
@@ -25,15 +24,17 @@ class EducationDegreeController extends Controller
         $this->educationDegreeModel = new EducationDegree();
         $this->statusModel = new Status();
         $this->educationStageModel = new EducationStage();
+        $this->userId = UserCommon::getLoggedInUserId();
     }
     /**
      * Show the institute Registration form.
      *
      * @return \Illuminate\Http\Response
      */    
-    public function index(Request $request)
+    public function index(Request $request, $id=null)
     {
-    	if($request->isMethod('get')){
+    	//echo $id;
+        if($request->isMethod('get')){
              $educationDegree = $this->educationDegreeModel->getEducationDegreeFullDetails() ;
              $status = $this->statusModel->getStatus();
              $educationStage = $this->educationStageModel->getEducationStage();
@@ -45,12 +46,44 @@ class EducationDegreeController extends Controller
         // }
 
          else if($request->isMethod('put')){
-
-
-
+           
+            return $this->update_education_degree($request,$id);
           }
+          else if($request->isMethod('post')){
+            return $this->create_education_degree($request);
+            return $request->all();
+          }
+    }
 
-
+    /**
+     * 
+     */
+    public function create_education_degree(Request $request){
+      $requestArray = $request->all();
+       // validate institute form data if fails return validation error
+       $validation = EducationDegreeBL::validate($request->all());
+        if($validation->fails()){
+            $errors = $validation->errors();
+            return Response($errors->toJson(),400);
+        }
+        $education_degree = EducationDegreeBL::updateKeyMapping($requestArray) ;
+        $resp = $this->educationDegreeModel->addEducationDegree($education_degree , $this->userId) ;
+        return $resp;
+    }
+    /**
+     * 
+     */
+    public function update_education_degree(Request $request, $id){
+       $requestArray = $request->all();
+       // validate institute form data if fails return validation error
+       $validation = EducationDegreeBL::validate($request->all());
+        if($validation->fails()){
+            $errors = $validation->errors();
+            return Response($errors->toJson(),400);
+        }
+        $education_degree = EducationDegreeBL::updateKeyMapping($requestArray) ;
+        $resp = $this->educationDegreeModel->updateEducationDegree($education_degree , $this->userId, $id) ;
+        return $resp;
     }
     
 

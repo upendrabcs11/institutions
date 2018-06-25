@@ -92,6 +92,7 @@ textarea {
                 <th> Short Name</th>
                 <th>Eductaion Stage Id</th>                      
                 <th>Status</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -176,13 +177,38 @@ textarea {
 @section('scripts')
    <script type="text/javascript" src={{ asset("/js/common/validation.js")}}></script>
    <script type="text/javascript">
+      var edu_status= @json($status);
+      var edu_stage= @json($stage);
+      console.log(edu_stage);
+      
+      console.log(edu_status);
    $(document).ready(function(){ 
        $(".menu-item> h4 a").on("click",function(){
             $(this).parent().parent().find('ul').toggle(); 
        });
+       
        $(".updatebutton").on("click",function(){
-            //validation
-            var parent_tr = $(this).parent().parent();
+            add_update_education_degree($(this),"PUT");
+       });
+
+      $(document).on("click",".insertbutton",function(){
+         add_update_education_degree($(this),"POST");
+      });
+
+       $(".accordion-toggle").on("click", function(){
+          $(this).find('.fa').toggleClass('fa-arrow-circle-o-down');
+          $(this).find('.fa').toggleClass('fa-arrow-circle-o-up');
+       })
+
+      $(".addbutton").click(function(){
+                  
+          var add_obj = create_new_tr_object();
+           $('tbody').prepend(add_obj);
+       });
+
+   });
+ function add_update_education_degree(obj,request_type){
+           var parent_tr = $(obj).parent().parent();
             var close_tr = $(parent_tr).next();
             var degree_info = {};
             degree_info.DegreeId = $(parent_tr).find(".item-id").find('span').text();
@@ -198,21 +224,100 @@ textarea {
                                               find('select option:selected').text();                                
             degree_info.Description = $(close_tr).find(".item-description").find('textarea').val();
             // console.log(parent_tr,close_tr)
+            if(request_type == "PUT")
+                last_url = "/"+degree_info.DegreeId ;
+            else if(request_type == "POST")
+              last_url = "";
+
+            $.ajax({
+                type : request_type,
+                url : url_config.baseUrl + "/admin/teacher/education-degree"+last_url,
+                data : degree_info ,
+                success : function(responce){
+                  //console.log(responce);
+                  // need to show msg of successful submission
+                  if(request_type == "POST")
+                       location.reload();
+                },
+                error : function(){
+                  alert('Error');
+                }
+          });
             console.log(degree_info);
-            
-       })
+    }
 
-       $(".accordion-toggle").on("click", function(){
-          $(this).find('.fa').toggleClass('fa-arrow-circle-o-down');
-          $(this).find('.fa').toggleClass('fa-arrow-circle-o-up');
-       })
-
-
-    
-
-      
-
-   });
-
-   </script>
+ function create_new_tr_object(){
+       var new_obj = '<tr>'
+                +'<td class="accordion-toggle item-id" data-toggle="collapse" data-target="#collapse" nowrap="">'
+                      +'<span>NA</span> &nbsp;<i class="fa fa-arrow-circle-o-down">'
+                +'</td>'
+                +'<td class="item-priority">'
+                  +'<input type="number" class="form-control" value="">'
+                +'</td>'
+                +'<td class="item-name">'
+                + '<input type="text" class="form-control" value="">'
+                +'</td>'
+                +'<td class="item-fullname">'
+                +'<input type="text" class="form-control" value="">'
+                +'</td>'
+                +'<td class="item-shortname">'
+                + '<input type="text" class="form-control" value="">'
+                +'</td>'
+                +'<td class="item-education-stage">'
+                  +'<select class="form-control">'
+                        + add_stage()     
+                  +'</select>'
+                +'</td>'               
+                +'<td class="item-status">'
+                 + '<select class="form-control">'
+                      +  add_status()
+                + '</select>'
+               +'</td>'
+               +'<td><button type="button" class="btn btn-success insertbutton">Insert</button></td>'
+              +'</tr>'
+              +'<tr class="noborder">'
+              +'<td colspan="9" style="padding:0 10px">'
+               +'<div id="collapse" class="collapse">'
+                  +'<div class="row form-group">'                                
+                    +'<div class="col-md-4 form-inline">'
+                      +'<label>Created Date:-</label>'
+                      +'<span> </span>'
+                     +'</div>'
+                    +'<div class="col-md-4 form-inline">'
+                     +'<label>Updated Date:-</label>'
+                     +'<span></span>'
+                    +'</div>'                   
+                  +'</div>'
+                  +'<div class="row form-group">' 
+                    +'<div class="col-md-4 form-inline">'
+                       +'<label>Updated By:-</label>'
+                       +'<span></span>'
+                    +'</div>'
+                    +'<div class="col-md-6 form-inline item-description">'
+                      +'<label>Description</label>'
+                      +'<textarea class="form-control"rows="2"cols="50"></textarea>'
+                    +'</div>'
+                  +'</div>'
+                +'</div>'
+              +'</td>'
+            +'</tr>'
+        return new_obj;
+    };
+     function add_status(){
+      var obj_status="";
+        for(i in edu_status){
+          obj_status += '<option Value="'+edu_status[i].StatusId+'">'+
+           edu_status[i].Status+'</option>' ;
+         } 
+         return obj_status;
+     }
+   function add_stage(){
+      var obj_stage="";
+        for(i in edu_stage){
+          obj_stage += '<option Value="'+edu_stage[i].EducationStageId+'">'+
+            edu_stage[i].EducationStageName+'</option>' ;
+         } 
+         return obj_stage;
+     }
+</script>
 @endsection
