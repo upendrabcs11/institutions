@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Institute;
 
 use Illuminate\Http\Request ;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator ;
 use Illuminate\Support\Facades\Auth ;
 use Illuminate\Foundation\Auth\AuthenticatesUsers ;
@@ -102,15 +103,15 @@ class InstituteController extends Controller
         if(InstituteBL::hasPermissionToUpdate($id)){
             $validation = InstituteBL::basicInfoValidation($request->all());
             if($validation->fails()){
-                $errors = $validation->errors();
-                return $errors->toJson();
+                $errors = $validation->errors(); 
+                return Response($errors->toJson(), 400);
             }
           $instituteInfo = InstituteBL::updateInstituteKeyMapping($request->all());
           //return $instituteInfo;
           $institute = $this->instituteModel->updateInstituteBasicInfo($instituteInfo,$id);
           return $institute;          
        }
-       return "Permission Dennied ";
+       return Response("Unothrised use", 300);
     }
 
     public function updateAddress(Request $request, $id)
@@ -120,14 +121,14 @@ class InstituteController extends Controller
             $validation = InstituteBL::instituteAddress($request->all());
             if($validation->fails()){
                 $errors = $validation->errors();
-                return $errors->toJson();
+                return Response($errors->toJson(), 400);
             }
           $instituteInfo = InstituteBL::updateInstituteKeyMapping($request->all());
           //return $instituteInfo;
           $institute = $this->instituteModel->updateInstituteAddress($instituteInfo,$id);
           return $institute;          
        }
-       return "Permission Dennied ";
+       return Response("Unothrised use", 300);
     }
 
 }

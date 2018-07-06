@@ -81,6 +81,7 @@
  			success : function(responce){
  			  //console.log(responce);
  			  // need to show msg of successful submission
+ 			  bindUpdatedDataToinstituteInformation(responce);
  			},
  			error : function(){
  				alert('Error');

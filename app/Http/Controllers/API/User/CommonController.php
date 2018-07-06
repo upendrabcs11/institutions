@@ -23,29 +23,23 @@ class CommonController extends Controller
     {
         
     }
-    /**  API : Update status of institute  
+    /**  API : Get User Type  
     */
     public function getUserType(Request $request)
-    {  
+    {
+       $req = $request->all();
        $userTypeModel = new UserType();
-       return $userTypeModel->getUserType();
+       return $userTypeModel->getUserType($req);
     }
-    /**
-     * 
-     */
-    public function getCollegeType(Request $request)
-    {  
-       $collegeTypeModel = new CollegeType();
-       return $collegeTypeModel->getCollegeType();
-    }
+    
     /**
      * 
      */
     public function getCollege(Request $request)
     {  
-       $searchStr = $request->SearchUsing;
+       $req = $request->all();
        $collegeModel = new College();
-       return $collegeModel->getCollege($searchStr);
+       return $collegeModel->getCollege($req);
     }
     /**
      * 

@@ -23,12 +23,9 @@ Route::get('/user', function (Request $request) {
 
 Route::group(['namespace' => 'API'], function () {
 	Route::group(['namespace' => 'Location'], function () {
-	    Route::match(['get', 'post'],'/state', 'LocationController@state');
-	    Route::match(['get', 'post'],'/city', 'LocationController@city');
-	    Route::match(['get', 'post'],'/area', 'LocationController@area');
-	    Route::get('/state/{id?}', 'LocationController@getStateById');
-	    Route::get('/city/{id?}', 'LocationController@getCityById');
-	    Route::get('/area/{id?}', 'LocationController@getAreaById');
+	    Route::match(['get','post'],'/state/{id?}', 'LocationController@state');
+	    Route::match(['get','post'],'/city/{id?}', 'LocationController@city');
+	    Route::match(['get','post'],'/area/{id?}', 'LocationController@area');
 	});
 	Route::group(['namespace' => 'User'], function () {
 	    Route::get('/user/user-type', 'CommonController@getUserType');
@@ -36,7 +33,6 @@ Route::group(['namespace' => 'API'], function () {
 	    Route::get('/user/education-department', 'CommonController@getEducationDepartment');
 	    Route::get('/user/education-stage', 'CommonController@getEducationStage');
 	    Route::get('/user/teacher-title', 'CommonController@getTeacherTitle');
-	    Route::get('/college-type', 'CommonController@getCollegeType');
 	    Route::get('/college', 'CommonController@getCollege');
 	});
 
