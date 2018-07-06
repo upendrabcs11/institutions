@@ -9,7 +9,6 @@ use App\Common\UserCommon ;
 
 class UserBL 
 {
-    const USER_TYPE = ['Normal'=> 0,'Teacher'=>1, 'InstituteAdmin' => 10, 'SuperAdmin'=>11];
 
     public static function updateUserKeyMapping($userDetail)
     {
