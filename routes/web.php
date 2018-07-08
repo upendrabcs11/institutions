@@ -51,18 +51,29 @@ Route::get('/home', 'HomeController@index');
 
 
 Route::prefix('admin')->group(function () {
-	//Route::group(['namespace' => 'Admin'], function () {
+    //Route::group(['namespace' => 'Admin'], function () {
 
-	    Route::prefix('institute')->group(function () {
-		   Route::group(['namespace' => 'Institute'], function () {
-			 //Route::match(['post','put','delete'],'/education-degree', 'EducationDegreeController@index');	
-		  }); 
-		});
-		Route::prefix('teacher')->group(function () {
-		   Route::group(['namespace' => 'User'], function () {
-			 Route::match(['get','post','put','delete'],'/education-degree/{id?}', 'EducationDegreeController@index');
-			 Route::match(['get','post','put','delete'],'/college-type/{id?}', 'CollegeTypeController@index');
-		  }); 
-		});
-	//});
+        Route::prefix('institute')->group(function () {
+               Route::group(['namespace' => 'Institute'], function () {
+                     //Route::match(['post','put','delete'],'/education-degree', 'EducationDegreeController@index');	
+              }); 
+            });
+
+            Route::prefix('teacher')->group(function () {
+               Route::group(['namespace' => 'User'], function () {
+                     Route::match(['get','post','put','delete'],'/education-degree/{id?}', 'EducationDegreeController@index');
+                     Route::match(['get','post','put','delete'],'/college-type/{id?}', 'CollegeTypeController@index');
+                     Route::match(['get','post','put','delete'],'/college/{id?}', 'CollegeController@index');
+              }); 
+            });
+            
+            Route::prefix('location')->group(function () {
+               Route::group(['namespace' => 'Location'], function () {
+                     Route::match(['get','post','put','delete'],'/state/{id?}', 'StateController@index');
+                     Route::match(['get','post','put','delete'],'/city/{id?}', 'CityController@index');
+
+                    
+              }); 
+            });
+    //});
 });

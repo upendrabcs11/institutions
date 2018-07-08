@@ -22,13 +22,14 @@ class LocationController extends Controller
     }
    
     /**  API : Get the details of city based on StateID 
-    *           if stateId is 0 then return all citys
+    *           if stateId is 0 then return all cities
     */
     public function state(Request $request)
     {
         if($request->isMethod('get')){
-            $stateId = $request->StateId ;
-            return $this->locationModel->getState($stateId);
+            //$stateId = $request->StateId ;
+            $req = $request->all();
+            return $this->locationModel->getState($req);
         }
         else{ // method == POST
             return $this->postState($request);

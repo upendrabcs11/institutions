@@ -49,6 +49,29 @@ max-width: 95vw;
 .table-striped > tbody > tr.noborder td{border-top:none;}
 
 
+
+.paging-nav {
+  text-align: right;
+padding-top: 2px;
+}
+
+.paging-nav a {
+  margin: auto 1px;
+  text-decoration: none;
+  display: inline-block;
+  padding: 1px 7px;
+  background: #91b9e6;
+  color: white;
+  border-radius: 3px;
+}
+
+.paging-nav .selected-page {
+  background: #187ed5;
+  font-weight: bold;
+
+}
+
+
 </style>
 
 
@@ -181,7 +204,11 @@ max-width: 95vw;
   
 @section('scripts')
    <script type="text/javascript" src={{ asset("/js/common/validation.js")}}></script>
-   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+  
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+ <script type="text/javascript" src={{ asset("/js/common/paging.js")}}></script>
 
    <script type="text/javascript">
       var edu_status= @json($status);
@@ -189,7 +216,14 @@ max-width: 95vw;
       console.log(edu_stage);
       
       console.log(edu_status);
-   $(document).ready(function(){ 
+   $(document).ready(function(){
+      $('.tabledata').paging({
+        limit:8,
+        rowDisplayStyle: 'block',
+        activePage: 0,
+        rows: []
+
+      }); 
        $(".menu-item> h4 a").on("click",function(){
                   $(this).parent().parent().find('ul').toggle();
                  
