@@ -8,7 +8,6 @@ CREATE  TABLE `colleges` (
   `priority` SMALLINT DEFAULT 0, 
   `university_id`  INT, 
   `university_name`  VARCHAR(100),
-  `college_type_id` SMALLINT,
   `status_id` SMALLINT NOT NULL,
   `state_id` SMALLINT NOT NULL,
   `state_name` VARCHAR(100),

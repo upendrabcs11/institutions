@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Model\User;
+use App\Common\Enum ;
 use DB;
 
 class UserType 
@@ -10,12 +11,15 @@ class UserType
      *
      * @return \Illuminate\Http\Response
      */
-    public function  getUserType()
-    {        
-        $user_type = DB::table('user_types')
-                ->select('id as UserTypeId','name as UserTypeName')
-                //->where('status_id','=','0')
-                ->orderby('priority')->get();
+    public function  getUserType($req)
+    {     
+        $query = DB::table('user_types')
+                ->select('id as UserTypeId','name as UserTypeName');
+        if(isset($req['status']))
+              $query = $query->where('status_id','=',$req['status']) ;
+        
+        $user_type = $query->orderby('priority')->get();
+
         return $user_type;
     }
     /**

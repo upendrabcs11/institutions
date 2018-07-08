@@ -11,7 +11,7 @@ SET SESSION SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
   DROP TABLE IF EXISTS `classes_batchs_shedule`;
   DROP TABLE IF EXISTS `classes_batch_type`; 
   DROP TABLE IF EXISTS `courses`; 
-  DROP TABLE IF EXISTS `education_stage`; 
+  DROP TABLE IF EXISTS `education_stage`; -- master 
   DROP TABLE IF EXISTS `examination_types`;
   
 
@@ -33,8 +33,7 @@ SET SESSION SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 
 
 -- drop dependentable table
-  DROP TABLE IF EXISTS `teacher_titles`; 
-  DROP TABLE IF EXISTS `college_types`; 
+  DROP TABLE IF EXISTS `teacher_titles`;
   DROP TABLE IF EXISTS `user_types` ; 
   DROP TABLE IF EXISTS `course_types`; 
   DROP TABLE IF EXISTS `course_groups`; 
@@ -163,23 +162,6 @@ INSERT INTO course_levels(`id`,`name`,`description`,`status_id`)
             ('4', '11th, 12th, Med. and Engg', '11th And 12th', 1);
 
 
-CREATE  TABLE `college_types` (
-  `id` SMALLINT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NOT NULL ,
-  `description` VARCHAR(500),
-  `priority` SMALLINT DEFAULT 0,
-  `status_id` SMALLINT NOT NULL DEFAULT 0,
-  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_by` INT,
-   CONSTRAINT PK_college_types PRIMARY KEY (id),
-   CONSTRAINT FK_college_types_status FOREIGN KEY (`status_id`) REFERENCES status(`id`)
-   );
-
-
-INSERT INTO college_types(`id`,`name`,`description`)
-       VALUES ('0','Not Specified','not specification');
-
 
 CREATE  TABLE `teacher_titles` (
   `id` SMALLINT NOT NULL AUTO_INCREMENT,
@@ -258,34 +240,6 @@ INSERT INTO education_stage(`id`,`name`,`description`,`status_id`)
             ('12','P.H.D', 'P.H.D', 1);
 
 
--- CREATE  TABLE `education_levels` (
---   `id` SMALLINT NOT NULL  ,
---   `name` VARCHAR(45) NOT NULL ,
---   `full_name` VARCHAR(100) ,
---   `short_name` VARCHAR(45) ,
---   `status_id` SMALLINT NOT NULL DEFAULT 0,
---   `description` VARCHAR(500),
---   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
---   `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
---   `updated_by` INT,
---    CONSTRAINT PK_education_levels PRIMARY KEY (id) ,
---    CONSTRAINT FK_education_levels_status FOREIGN KEY (`status_id`) REFERENCES status(`id`)
---    );
-
--- INSERT INTO education_levels(`id`,`name`,`description`,'status_id')
---        VALUES ('0','not define','degree level is not defined or unknown',0),
---             ('1','primary school','education from 1th to 5th ', 0),
---             ('2','secondry schooling','education from 6th to 8th', 0),
---             ('3','high schooling','education 9th to 10th', 0),
---             ('4','Metriculation','10th passed student with degree', 1),
-
---             ('10','intermediate 1','first year of intermediate schooling', 0),
---             ('11','Intermediate','first year of intermediate schooling', 1),
---             ('12','Depaloma','polytinic', 0),
-            
---             ('20','Graduation','after intermideate eduaction', 1),
-
---             ('30','Post Graduation','after Graduation eduaction', 1);
 
 
 CREATE  TABLE `education_departments` (
@@ -674,6 +628,28 @@ CREATE  TABLE `colleges` (
    );
 
 
+CREATE  TABLE `colleges` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(100)  NOT NULL,
+  `full_name` VARCHAR(100) ,
+  `short_name` VARCHAR(100) ,
+  `priority` SMALLINT DEFAULT 0, 
+  `university_id`  INT, 
+  `university_name`  VARCHAR(100),
+  `status_id` SMALLINT NOT NULL,
+  `state_id` SMALLINT NOT NULL,
+  `state_name` VARCHAR(100),
+  `city_id` INT NOT NULL,
+  `city_name` VARCHAR(100),
+  `main_address` VARCHAR(200),
+  `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` INT,
+  `about_college` VARCHAR(10000),
+  `college_url` VARCHAR(100),  
+   CONSTRAINT PK_colleges PRIMARY KEY (id),
+   CONSTRAINT FK_colleges_status FOREIGN KEY (`status_id`) REFERENCES status(`id`)
+   );
 
 
 
@@ -684,7 +660,7 @@ CREATE  TABLE `colleges` (
 
 
 -- mapping table
- DROP TABLE IF EXISTS `class_batch_to_examination_type`; 
+DROP TABLE IF EXISTS `class_batch_to_examination_type`; 
 CREATE  TABLE `class_batch_to_examination_type` (
   `class_batch_id` INT NOT NULL ,
   `examination_type_id` INT NOT NULL ,
