@@ -172,6 +172,7 @@ padding-top: 2px;
                       <textarea class="form-control"rows="2"cols="50">{{$degree->Description}}</textarea>
                     </div>
                   </div>
+<<<<<<< HEAD
               </div>
             </div>
           </td>
@@ -199,6 +200,17 @@ padding-top: 2px;
 
 
 
+=======
+                </div>
+              </td>
+            </tr>
+               @endforeach             
+            </tbody>
+       </table>
+       </div>
+   </div>
+</div>
+>>>>>>> 5deff24da39054656726d8701d0f75873355b432
 </div>
 @endsection
   
@@ -225,9 +237,6 @@ padding-top: 2px;
 
       }); 
        $(".menu-item> h4 a").on("click",function(){
-                  $(this).parent().parent().find('ul').toggle();
-                 
-
        });
        
        $(".updatebutton").on("click",function(){
@@ -363,4 +372,10 @@ padding-top: 2px;
          return obj_stage;
      }
 </script>
-@endsection
+<<<<<<< HEAD
+                  $(this).parent().parent().find('ul').toggle();
+                 
+
+=======
+            $(this).parent().parent().find('ul').toggle(); 
+>>>>>>> 5deff24da39054656726d8701d0f75873355b432

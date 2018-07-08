@@ -33,5 +33,4 @@ class EducationStage
                 ->get();
         return $education_stage;
     }
-    
 }
