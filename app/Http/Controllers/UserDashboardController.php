@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use  Illuminate\Support\Facades\Auth;
 use App\Common\UserCommon ;
 use App\Model\Institute\Institute ;
+use App\BusinessLogic\User\UserBL ;
+
 
 class UserDashboardController extends Controller
 {
@@ -20,7 +22,7 @@ class UserDashboardController extends Controller
     {
         $this->instituteModel = new Institute();
         $this->middleware('auth');
-        $this->dashBoardType = UserCommon::getLoogedInUserType();
+        $this->dashBoardType = UserCommon::getLoggedInUserType();
     }
 
     /**
@@ -33,9 +35,21 @@ class UserDashboardController extends Controller
         return $this->getInstituteDashboard();
     }
     protected function getInstituteDashboard(){
-        $userId = UserCommon::getLoogedInUserId();
-        $instituteDetails = $this->instituteModel->getInstituteByUserId($userId);
-        return view('dashboard.institute')->with(['institute'=> $instituteDetails[0]]);
+        $userType = UserCommon::getLoggedInUserType();
+        if($userType == UserBL::UserType['InstituteAdmin']){
+            $userId = UserCommon::getLoggedInUserId();
+            $instituteDetails = $this->instituteModel->getInstituteByUserId($userId);
+            return view('dashboard.institute')->with(['institute'=> $instituteDetails[0]]);
+        }
+        else if($userType == UserBL::UserType['Teacher']){
+            return view('dashboard.user_details');
+        }
+        else if($userType == UserBL::UserType['Normal']){
+            return "Normal";
+        }
+        else 
+            return "none";
+        
     }
    
 

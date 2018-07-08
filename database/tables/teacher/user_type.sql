@@ -2,9 +2,10 @@
 DROP TABLE IF EXISTS `user_types` ; 
 
 CREATE  TABLE `user_types` (
-  `id` TINYINT NOT NULL  ,
+  `id` SMALLINT NOT NULL  ,
   `name` VARCHAR(45) NOT NULL ,
-  `status_id` TINYINT,
+  `priority` SMALLINT DEFAULT 0,
+  `status_id` SMALLINT,
   `description` VARCHAR(500),
   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

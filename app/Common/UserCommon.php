@@ -8,7 +8,7 @@ class UserCommon
     /**
      * return looged in user id
      */
-    public static function getLoogedInUserId(){
+    public static function getLoggedInUserId(){
       if(Auth::user() == NULL)
          return 0;
       return Auth::user()->id;
@@ -16,15 +16,15 @@ class UserCommon
     /**
      * return looged in user id
      */
-    public static function getLoogedInUserType(){
+    public static function getLoggedInUserType(){
       if(Auth::user() == NULL)
           return 0;
-      return Auth::user()->user_type;
+      return Auth::user()->user_type_id;
     }
     /**
      * return looged in user id
      */
-    public static function isLoogedInUserSuperAdmin(){
+    public static function isLoggedInUserSuperAdmin(){
       if(Auth::user() == NULL)
           return false;
       return (Auth::user()->type == 'super admin');

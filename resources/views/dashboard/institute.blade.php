@@ -45,7 +45,7 @@
 		      <button class="add-img-buttom"><i class="fa fa-camera" aria-hidden="true"></i> Add Image</button>
 
 		      <div class="carousel-title">
-		      	{{ $institute->Name."(".$institute->FullName.")" }}
+		      	{{ $institute->Name }}
 		      </div>
 
 		    </div>
@@ -221,6 +221,19 @@
 	 	});
 	 }
   }
-
+  function bindUpdatedDataToinstituteInformation(resp){
+  		resp = resp[0];
+  		$("#institute-basic-info .ins-det-item").children('.row').each(function (i) {
+           //console.log($(this).find('.col-xs-10').text(),i,ins_info[i],resp[ins_info[i]]);
+           $(this).find('.col-xs-10').text(resp[ins_info[i]])
+		});
+		var address = resp['CityName']+', '+ resp['StateName']+'</br>'+
+					resp['AreaName']+', '+ resp['Address']+'('+resp['PinCode']+')';
+		
+		$("#institute-address .ins-det-item").find('.col-xs-10').html(address);
+		$(".carousel-title").text(resp['Name'])
+   }
+   // array to bind institute info
+   var ins_info = ["Name","ShortName","FullName","InstituteType","Status"];
 </script>
 @endsection

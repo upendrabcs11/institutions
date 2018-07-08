@@ -4,9 +4,10 @@ DROP TABLE IF EXISTS `city_areas` ;
 CREATE  TABLE `city_areas` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
+  `priority` SMALLINT DEFAULT 0,
   `city_id` INT NOT NULL,
   `pin_code` VARCHAR(6)  DEFAULT '',
-  `status_id` TINYINT NOT NULL DEFAULT '0',
+  `status_id` SMALLINT NOT NULL DEFAULT '0',
   `created_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `last_updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` INT,

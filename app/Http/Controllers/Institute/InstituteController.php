@@ -2,17 +2,19 @@
 namespace App\Http\Controllers\Institute;
 
 use Illuminate\Http\Request ;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator ;
 use Illuminate\Support\Facades\Auth ;
 use Illuminate\Foundation\Auth\AuthenticatesUsers ;
 
 use App\Http\Controllers\Controller ;
 use App\Common\UserCommon ;
-use App\Model\Common\User ;
-use App\Model\Common\InstituteCommonType;
+use App\Model\User\User ;
+use App\Model\Institute\InstituteType;
+use App\Model\Institute\Institute ;
 
 use App\BusinessLogic\User\UserBL ;
-use App\Model\Institute\Institute ;
+
 use App\BusinessLogic\Institute\InstituteBL ;
 
 class InstituteController extends Controller
@@ -26,8 +28,8 @@ class InstituteController extends Controller
     public function __construct()
     {
         $this->userModel = new User();
-        $this->instituteModel = new Institute(UserCommon::getLoogedInUserId());
-        $this->common = new InstituteCommonType();
+        $this->instituteModel = new Institute(UserCommon::getLoggedInUserId());
+        $this->common = new InstituteType();
      
     }
     /**
@@ -52,7 +54,7 @@ class InstituteController extends Controller
 
         $userData = UserBL::updateUserKeyMapping($requestArray) ; 
         $userData['Status'] = 1 ;
-        $userData['UserType'] = 1 ;
+        $userData['UserType'] = UserBL::USER_TYPE['InstituteAdmin'] ;
         $user = $this->userModel->createUser($userData);
         if($user == null){
             return $user ; // notification log error
@@ -74,7 +76,7 @@ class InstituteController extends Controller
      */
    public function getBasicInfoEditPage()
     {
-        $userId = UserCommon::getLoogedInUserId();
+        $userId = UserCommon::getLoggedInUserId();
         $instituteDetails = $this->instituteModel->getInstituteByUserId($userId);
         $institute_type = $this->common->getInstituteType();
         //echo $institute_type;
@@ -87,7 +89,7 @@ class InstituteController extends Controller
      */
    public function getAddressEditPage()
     {
-        $userId = UserCommon::getLoogedInUserId();
+        $userId = UserCommon::getLoggedInUserId();
         $instituteDetails = $this->instituteModel->getInstituteByUserId($userId);
         //echo $institute_type;
         return view('dashboard_partial.institute_address_edit')
@@ -101,15 +103,15 @@ class InstituteController extends Controller
         if(InstituteBL::hasPermissionToUpdate($id)){
             $validation = InstituteBL::basicInfoValidation($request->all());
             if($validation->fails()){
-                $errors = $validation->errors();
-                return $errors->toJson();
+                $errors = $validation->errors(); 
+                return Response($errors->toJson(), 400);
             }
           $instituteInfo = InstituteBL::updateInstituteKeyMapping($request->all());
           //return $instituteInfo;
           $institute = $this->instituteModel->updateInstituteBasicInfo($instituteInfo,$id);
           return $institute;          
        }
-       return "Permission Dennied ";
+       return Response("Unothrised use", 300);
     }
 
     public function updateAddress(Request $request, $id)
@@ -119,14 +121,14 @@ class InstituteController extends Controller
             $validation = InstituteBL::instituteAddress($request->all());
             if($validation->fails()){
                 $errors = $validation->errors();
-                return $errors->toJson();
+                return Response($errors->toJson(), 400);
             }
           $instituteInfo = InstituteBL::updateInstituteKeyMapping($request->all());
           //return $instituteInfo;
           $institute = $this->instituteModel->updateInstituteAddress($instituteInfo,$id);
           return $institute;          
        }
-       return "Permission Dennied ";
+       return Response("Unothrised use", 300);
     }
 
 }

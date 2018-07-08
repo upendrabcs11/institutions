@@ -62,7 +62,7 @@
 <script type="text/javascript">
 	var strLocation = strLocation || {};
  	$(document).ready(function(){
- 	  strLocation.IsNeededPopUpForm = false;
+ 	  strLocation.IsNeededPopUpForm = false; 
  	  strLocation.stateDiv =  $("#ins-state");
       strLocation.cityDiv =  $("#ins-city");
       strLocation.areaDiv =  $("#ins-city-area");
@@ -117,7 +117,7 @@
 	  	  instituteInfo.CityArea = $(objSelector).find("#ins-city-area").find('.form-control').val();
 	  	  instituteInfo.CityAreaId = $(objSelector).find("#ins-city-area").find('.id-field').val();
 	  	  instituteInfo.Address = $(objSelector).find("#ins-address").find('.form-control').val();
-	  	  console.log(instituteInfo)
+	  	 // console.log(instituteInfo)
 	   //validate input 
 	   var isValid = true;
 	   if(instituteInfo.StateId > 0 && instituteInfo.State){
@@ -151,6 +151,7 @@
  			success : function(responce){
  			  //console.log(responce);
  			  // need to show msg of successful submission
+ 			  bindUpdatedDataToinstituteInformation(responce);
  			},
  			error : function(){
  				alert('Error');
