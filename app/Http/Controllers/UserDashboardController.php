@@ -7,6 +7,7 @@ use  Illuminate\Support\Facades\Auth;
 use App\Common\UserCommon ;
 use App\Model\Institute\Institute ;
 use App\BusinessLogic\User\UserBL ;
+use App\Common\Enum ;
 
 
 class UserDashboardController extends Controller
@@ -36,15 +37,15 @@ class UserDashboardController extends Controller
     }
     protected function getInstituteDashboard(){
         $userType = UserCommon::getLoggedInUserType();
-        if($userType == UserBL::USER_TYPE['InstituteAdmin']){
+        if($userType == Enum::UserType['InstituteAdmin']){
             $userId = UserCommon::getLoggedInUserId();
             $instituteDetails = $this->instituteModel->getInstituteByUserId($userId);
             return view('dashboard.institute')->with(['institute'=> $instituteDetails[0]]);
         }
-        else if($userType == UserBL::USER_TYPE['Teacher']){
+        else if($userType == Enum::UserType['Teacher']){
             return view('dashboard.user_details');
         }
-        else if($userType == UserBL::USER_TYPE['Normal']){
+        else if($userType == Enum::UserType['Normal']){
             return "Normal";
         }else if($userType == UserBL::USER_TYPE['SuperAdmin']){
             return view('admin.admin_dashboard');
