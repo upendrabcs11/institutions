@@ -19,20 +19,22 @@ class Location
     /** purpose : get states details
      * 
      */
-    public function getState($stateId = null)
+    public function getState($req)
     {
-        if($stateId == null){
-    	   $states = DB::table('states')->where('id','>','0')
-               ->select('id as StateId','name as StateName')->get();
+        $query = DB::table('states')
+                ->select('id as StateId','name as StateName')
+                ->where('id','>','0');
+        if(isset($req['stateid'])){
+    	   $states = $query->where('id','=',$req['stateid']);
         }
-        else{
-            $states = DB::table('states')->where('id',$stateId)
-                            ->select('id as StateId','name as StateName')->get();
+        if(isset($req['status'])){
+    	   $states = $query->where('status_id','=',$req['status']);
         }
-
+        $states = $query->get();
+        
         return $states;
     }
-    /** purpose : get citys details
+    /** purpose : get cities details
      * 
      */
     public function getCityByStateId($stateId = 0)
@@ -54,7 +56,7 @@ class Location
     /** purpose : get states details
      * 
      */
-    public function getCityById($cityId=null)
+    public function getCityById($cityId= null)
     {
          $city = DB::table('cities')->where('id',$cityId)
                     ->select('id as CityId','name as CityName')->get();

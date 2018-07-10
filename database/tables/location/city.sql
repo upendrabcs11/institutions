@@ -1,5 +1,5 @@
 
-DROP TABLE IF EXISTS `citis` ; 
+DROP TABLE IF EXISTS `cities` ; 
 
 CREATE  TABLE `cities` (
   `id` INT NOT NULL AUTO_INCREMENT ,

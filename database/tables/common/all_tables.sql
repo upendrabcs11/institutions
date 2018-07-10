@@ -21,6 +21,7 @@ SET SESSION SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
   DROP TABLE IF EXISTS `users`; 
   DROP TABLE IF EXISTS `education_departments`; 
   DROP TABLE IF EXISTS `education_degrees`; 
+  DROP TABLE IF EXISTS `education_levels`; 
   DROP TABLE IF EXISTS `teaching_experiences`;
 
 

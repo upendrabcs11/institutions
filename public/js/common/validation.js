@@ -6,9 +6,13 @@ var validate ={
 			email : /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/ ,
 			pinCode : /^[1-9][0-9]{5}$/ ,
 			address : /^[a-zA-Z]+[a-zA-Z1-9. +]{3,}$/,
+			optionalName : /^[a-zA-Z. ]*$/,
 		},
 	  nameCommon : function(name){
 	  	     return validate.regex.nameCommon.test(name);
+	      },
+	  optionalName : function(name){
+	  	     return validate.regex.optionalName.test(name);
 	      },
 	  mobile : function(mobile){
 	  			return validate.regex.mobileNo.test(mobile);

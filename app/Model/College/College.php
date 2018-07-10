@@ -36,4 +36,14 @@ class College
 
         return $colleges;
     }    
+   
+   public function  getAllCollege()
+    {   
+    
+        $allcolleges = DB::table('colleges')
+                ->get();
+        return $allcolleges;
+    }    
+
+
 }
