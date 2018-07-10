@@ -56,7 +56,7 @@ class Location
     /** purpose : get states details
      * 
      */
-    public function getCityById($cityId=null)
+    public function getCityById($cityId= null)
     {
          $city = DB::table('cities')->where('id',$cityId)
                     ->select('id as CityId','name as CityName')->get();
